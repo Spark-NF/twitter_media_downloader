@@ -8,6 +8,9 @@ from parser import getMedias
 from mapper import generateResults
 from downloader import download
 
+try: input = raw_input
+except NameError: pass
+
 
 # Setup argparse
 parser = argparse.ArgumentParser(description='Twitter media downloader.')
@@ -32,10 +35,8 @@ if not os.path.exists(oauthFile):
 		'consumer_token': '',
 		'consumer_secret': ''
 	}
-	print('Token: ', end='', flush=True)
-	auth['consumer_token'] = input()
-	print('Secret: ', end='', flush=True)
-	auth['consumer_secret'] = input()
+	auth['consumer_token'] = input('Token: ')
+	auth['consumer_secret'] = input('Secret: ')
 
 	with open(oauthFile, 'w') as file:
 		json.dump(auth, file, indent=4, default=lambda x:str(x))
