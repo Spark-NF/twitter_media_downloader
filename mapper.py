@@ -1,7 +1,11 @@
 import json
 import re
-from urllib.parse import urlparse
 from os.path import splitext, basename
+
+try:
+    from urllib.parse import urlparse
+except ImportError:
+     from urlparse import urlparse
 
 
 def generateResults(inputFile, outputFile, filenameFormat):
