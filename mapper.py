@@ -31,6 +31,7 @@ def generateResults(inputFile, outputFile, filenameFormat):
 	def parseFilename(format, date, url):
 		disassembled = urlparse(url)
 		file = basename(disassembled.path)
+		file = re.sub(':(?:thumb|small|medium|large)$', '', file)
 		filename, ext = splitext(file)
 		replaced = format.replace('%date%', date).replace('%filename%', filename).replace('%ext%', ext[1:])
 		slugified = slugify(replaced)

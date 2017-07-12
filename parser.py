@@ -16,7 +16,7 @@ class VideoMedia:
 	def __eq__(self, other):
 		return self.bitrate() == other.bitrate()
 
-def getMedias(auth, userId, outputFile):
+def getMedias(auth, userId, imageSize, outputFile):
 	auth = tweepy.OAuthHandler(auth['consumer_token'], auth['consumer_secret'])
 	api = tweepy.API(auth)
 
@@ -48,7 +48,10 @@ def getMedias(auth, userId, outputFile):
 
 					# Images
 					if 'sizes' in media:
-						urls['images'].append(media['media_url_https'])
+						url = media['media_url_https']
+						if imageSize in media['sizes']:
+							url += ":" + imageSize
+						urls['images'].append(url)
 
 		# Urls
 		if 'urls' in tweet.entities:
