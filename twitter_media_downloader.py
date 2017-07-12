@@ -19,7 +19,7 @@ parser = argparse.ArgumentParser(description='Twitter media downloader.')
 parser.add_argument('userid', type=str, help='the account name or ID')
 parser.add_argument('-o', '--output', type=str, metavar='DIR', help='the output directory', default='out')
 parser.add_argument('-f', '--format', type=str, metavar='FORMAT', help='the filename format', default='[%date%] %filename%.%ext%')
-parser.add_argument('-u', '--userid', help='append userid to output directory', action='store_true')
+parser.add_argument('-u', '--userid', help='append userid to output directory', action='store_true', dest='o_userid')
 parser.add_argument('-q', '--quiet', help='disable output', action='store_true')
 
 # Get argparse result
