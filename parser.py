@@ -16,17 +16,19 @@ class VideoMedia:
 	def __eq__(self, other):
 		return self.bitrate() == other.bitrate()
 
-def getMedias(auth, userId, imageSize, outputFile):
+def getMedias(auth, userId, includeRetweets, imageSize, outputFile):
 	auth = tweepy.OAuthHandler(auth['consumer_token'], auth['consumer_secret'])
 	api = tweepy.API(auth)
 
 	results = {
 		'media': []
 	}
+	retweets = 0
 	tweets = 0
-	for tweet in tweepy.Cursor(api.user_timeline, id=userId, include_rts=False, include_entities=True, tweet_mode='extended').items():
+	for tweet in tweepy.Cursor(api.user_timeline, id=userId, include_rts=includeRetweets, include_entities=True, tweet_mode='extended').items():
 		urls = {
 			'date': tweet.created_at,
+			'original_date': tweet.created_at,
 			'videos': [],
 			'images': [],
 			'urls': {
@@ -36,6 +38,13 @@ def getMedias(auth, userId, imageSize, outputFile):
 			},
 			'text': '' # tweet.full_text
 		}
+
+		if includeRetweets and hasattr(tweet, 'retweeted_status'):
+			tweet = tweet.retweeted_status
+			urls['original_date'] = tweet.created_at
+			retweets += 1
+		else:
+			tweets += 1
 
 		if hasattr(tweet, 'extended_entities'):
 			if 'media' in tweet.extended_entities:
@@ -72,9 +81,9 @@ def getMedias(auth, userId, imageSize, outputFile):
 			urls['text'] = tweet.full_text
 
 		results['media'].append(urls)
-		tweets += 1
 
 	print('Tweets: {0}'.format(tweets))
+	print('Retweets: {0}'.format(retweets))
 	print('Parsed: {0}'.format(len(results['media'])))
 
 	with open(outputFile, 'w') as file:
