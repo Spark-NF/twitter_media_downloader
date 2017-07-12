@@ -10,6 +10,16 @@ twitter_media_downloader.py [-h] [-o DIR] [-f FORMAT] [-s IMAGE_SIZE] [-r] [-u] 
 
 On first run, the program will ask you for your OAuth token and secret. It will then be stored in a `.oauth.json` file so that you don't need to enter them every single time.
 
+### Arguments
+* `userid`: the account name or ID
+* `-h`, `--help`: show the help and exit
+* `-o DIR`, `--output DIR`: set the output directory where medias will be downloaded
+* `-f FORMAT`, `--format FORMAT`: the filename format, see below for the available tokens to use
+* `-s IMAGE_SIZE`, `--image-size IMAGE_SIZE`: the preferred image size to download, will fallback to the default size if not available
+* `-r`, `--retweets`: also download medias from retweets
+* `-u`, `--userid`: append the userid to the output directory
+* `-q`, `--quiet`: disable output
+
 ### Example
 ```
 python twitter_media_downloader.py -o out -f '[%date%] %filename%.%ext%' -s large -u Twitter
