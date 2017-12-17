@@ -6,6 +6,9 @@ import os.path
 import io
 import sys
 import json
+
+# Import local functions
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from parser import getMedias
 from mapper import generateResults
 from downloader import download
