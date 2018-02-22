@@ -8,10 +8,9 @@ import sys
 import json
 
 # Import local functions
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
-from parser import getMedias
-from mapper import generateResults
-from downloader import download
+from src.parser import getMedias
+from src.mapper import generateResults
+from src.downloader import download
 
 try: input = raw_input
 except NameError: pass
