@@ -28,6 +28,8 @@ python twitter_media_downloader.py -o out -f '[%date%] %filename%.%ext%' -s larg
 Will download all of the `Twitter` account media files into the `out/Twitter/` directory, each file named like `[2017-01-11 05-56-33] C13U6d-VQAAVKeY.jpg`.
 
 ## Available tokens for format
+* `tweet_id`: the tweet identifier
+* `original_tweet_id`: the tweet original identifier (different from `id` in the case of retweets)
 * `date`: the tweet post date
 * `original_date`: the tweet original post date (different from `date` in the case of retweets)
 * `filename`: the file filename on the server

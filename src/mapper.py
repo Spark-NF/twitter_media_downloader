@@ -30,13 +30,15 @@ def generateResults(inputFile, outputFile, filenameFormat):
 	    value = re.sub('[<>/\\:"|?*]', '-', value).strip().lower()
 	    return value
 
-	def parseFilename(format, date, originalDate, url):
+	def parseFilename(format, tweetId, originalTweetId, date, originalDate, url):
 		disassembled = urlparse(url)
 		file = basename(disassembled.path)
 		file = re.sub(':(?:thumb|small|medium|large)$', '', file)
 		filename, ext = splitext(file)
 		replaced = format.replace('%date%', date) \
 			.replace('%original_date%', originalDate) \
+			.replace('%tweet_id%', tweetId) \
+			.replace('%original_tweet_id%', originalTweetId) \
 			.replace('%filename%', filename) \
 			.replace('%ext%', ext[1:])
 		slugified = slugify(replaced)
@@ -54,7 +56,7 @@ def generateResults(inputFile, outputFile, filenameFormat):
 
 		# Files
 		for url in media['images'] + media['videos']:
-			filename = parseFilename(filenameFormat, media['date'], media['original_date'], url)
+			filename = parseFilename(filenameFormat, media['tweet_id'], media['original_tweet_id'], media['date'], media['original_date'], url)
 			results['files'][filename] = url
 
 	with open(outputFile, 'w') as file:

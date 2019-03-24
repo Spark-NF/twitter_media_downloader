@@ -30,6 +30,8 @@ def getMedias(auth, userId, includeRetweets, imageSize, outputFile):
 	tweets = 0
 	for tweet in tweepy.Cursor(api.user_timeline, id=userId, include_rts=includeRetweets, include_entities=True, tweet_mode='extended').items():
 		urls = {
+			'tweet_id': tweet.id_str,
+			'original_tweet_id': tweet.id_str,
 			'date': tweet.created_at,
 			'original_date': tweet.created_at,
 			'videos': [],
@@ -44,6 +46,7 @@ def getMedias(auth, userId, includeRetweets, imageSize, outputFile):
 
 		if includeRetweets and hasattr(tweet, 'retweeted_status'):
 			tweet = tweet.retweeted_status
+			urls['original_tweet_id'] = tweet.id_str
 			urls['original_date'] = tweet.created_at
 			retweets += 1
 		else:
