@@ -16,6 +16,10 @@ On first run, the program will ask you for your OAuth token and secret. It will 
 * `-o DIR`, `--output DIR`: set the output directory where medias will be downloaded
 * `-f FORMAT`, `--format FORMAT`: the filename format, see below for the available tokens to use
 * `-s IMAGE_SIZE`, `--image-size IMAGE_SIZE`: the preferred image size to download, will fallback to the default size if not available
+* `--since DATE`: the start date of the search, accepted formats: `YYYY-mm-dd HH:MM` and `YYYY-mm-dd` (defaults to 00:00)
+* `--since-id ID`: the start ID of the search (exclusive)
+* `--until DATE`: the end date of the search, accepted formats: `YYYY-mm-dd HH:MM` and `YYYY-mm-dd` (defaults to 00:00)
+* `--until-id ID`: the end ID of the search (inclusive)
 * `-r`, `--retweets`: also download medias from retweets
 * `-u`, `--userid`: append the userid to the output directory
 * `-q`, `--quiet`: disable output

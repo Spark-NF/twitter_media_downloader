@@ -19,7 +19,7 @@ class VideoMedia:
 	def __eq__(self, other):
 		return self.bitrate() == other.bitrate()
 
-def getMedias(auth, userId, includeRetweets, imageSize, outputFile):
+def getMedias(auth, userId, includeRetweets, imageSize, outputFile, since, sinceId, until, untilId):
 	auth = tweepy.OAuthHandler(auth['consumer_token'], auth['consumer_secret'])
 	api = tweepy.API(auth)
 
@@ -28,7 +28,7 @@ def getMedias(auth, userId, includeRetweets, imageSize, outputFile):
 	}
 	retweets = 0
 	tweets = 0
-	for tweet in tweepy.Cursor(api.user_timeline, id=userId, include_rts=includeRetweets, include_entities=True, tweet_mode='extended').items():
+	for tweet in tweepy.Cursor(api.user_timeline, id=userId, include_rts=includeRetweets, include_entities=True, tweet_mode='extended', since_id=sinceId, max_id=untilId).items():
 		urls = {
 			'tweet_id': tweet.id_str,
 			'original_tweet_id': tweet.id_str,
@@ -43,6 +43,11 @@ def getMedias(auth, userId, includeRetweets, imageSize, outputFile):
 			},
 			'text': '' # tweet.full_text
 		}
+
+		if since is not None and tweet.created_at < since:
+			break
+		if until is not None and tweet.created_at > until:
+			continue
 
 		if includeRetweets and hasattr(tweet, 'retweeted_status'):
 			tweet = tweet.retweeted_status
