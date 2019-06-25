@@ -1,5 +1,9 @@
 # Twitter media downloader
 
+[![GitHub issues](https://img.shields.io/github/issues/Spark-NF/twitter_media_downloader.svg)](https://github.com/Spark-NF/twitter_media_downloader/issues)
+[![Build Status](https://travis-ci.org/Spark-NF/twitter_media_downloader.svg?branch=master)](https://travis-ci.org/Spark-NF/twitter_media_downloader)
+[![Project license](https://img.shields.io/github/license/Spark-NF/twitter_media_downloader.svg)](https://raw.githubusercontent.com/Spark-NF/twitter_media_downloader/develop/LICENSE)
+
 ## About
 Downloads all videos and images from a Twitter account.
 
