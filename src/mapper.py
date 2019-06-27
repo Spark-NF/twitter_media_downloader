@@ -10,6 +10,26 @@ except ImportError:
      from urlparse import urlparse
 
 
+def slugify(value):
+	import unicodedata
+	value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
+	value = re.sub('[<>/\\:"|?*]', '-', value).strip().lower()
+	return value
+
+def parseFilename(format, tweetId, originalTweetId, date, originalDate, url):
+	disassembled = urlparse(url)
+	file = basename(disassembled.path)
+	file = re.sub(':(?:thumb|small|medium|large)$', '', file)
+	filename, ext = splitext(file)
+	replaced = format.replace('%date%', date) \
+		.replace('%original_date%', originalDate) \
+		.replace('%tweet_id%', tweetId) \
+		.replace('%original_tweet_id%', originalTweetId) \
+		.replace('%filename%', filename) \
+		.replace('%ext%', ext[1:])
+	slugified = slugify(replaced)
+	return slugified
+
 def generateResults(inputFile, outputFile, filenameFormat):
 	file = open(inputFile).read()
 	data = json.loads(file)
@@ -23,26 +43,6 @@ def generateResults(inputFile, outputFile, filenameFormat):
 		},
 		'text': []
 	}
-
-	def slugify(value):
-	    import unicodedata
-	    value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
-	    value = re.sub('[<>/\\:"|?*]', '-', value).strip().lower()
-	    return value
-
-	def parseFilename(format, tweetId, originalTweetId, date, originalDate, url):
-		disassembled = urlparse(url)
-		file = basename(disassembled.path)
-		file = re.sub(':(?:thumb|small|medium|large)$', '', file)
-		filename, ext = splitext(file)
-		replaced = format.replace('%date%', date) \
-			.replace('%original_date%', originalDate) \
-			.replace('%tweet_id%', tweetId) \
-			.replace('%original_tweet_id%', originalTweetId) \
-			.replace('%filename%', filename) \
-			.replace('%ext%', ext[1:])
-		slugified = slugify(replaced)
-		return slugified
 
 	for media in data['media']:
 		# Text
