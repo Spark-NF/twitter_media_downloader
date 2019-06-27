@@ -62,10 +62,10 @@ retweet = Struct(**{
 
 def test_tweet():
     results = {
-		'tweets': 0,
-		'retweets': 0,
-		'media': []
-	}
+        'tweets': 0,
+        'retweets': 0,
+        'media': []
+    }
     parseTweet(tweet, True, 'large', results)
     assert results['tweets'] == 1
     assert results['retweets'] == 0
@@ -81,10 +81,10 @@ def test_tweet():
 
 def test_text_tweet():
     results = {
-		'tweets': 0,
-		'retweets': 0,
-		'media': []
-	}
+        'tweets': 0,
+        'retweets': 0,
+        'media': []
+    }
     parseTweet(text_tweet, True, 'large', results)
     assert results['tweets'] == 1
     assert results['retweets'] == 0
@@ -95,10 +95,10 @@ def test_text_tweet():
 
 def test_retweet():
     results = {
-		'tweets': 0,
-		'retweets': 0,
-		'media': []
-	}
+        'tweets': 0,
+        'retweets': 0,
+        'media': []
+    }
     parseTweet(retweet, True, 'large', results)
     assert results['tweets'] == 0
     assert results['retweets'] == 1
@@ -108,10 +108,10 @@ def test_retweet():
 
 def test_retweet_disabled():
     results = {
-		'tweets': 0,
-		'retweets': 0,
-		'media': []
-	}
+        'tweets': 0,
+        'retweets': 0,
+        'media': []
+    }
     parseTweet(retweet, False, 'large', results)
     assert results['tweets'] == 1
     assert results['retweets'] == 0

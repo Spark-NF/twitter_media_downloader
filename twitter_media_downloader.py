@@ -32,11 +32,11 @@ auth = getOAuth('.oauth.json')
 
 # Create output directory if necessary
 if not os.path.exists(outputDir):
-	os.makedirs(outputDir)
+    os.makedirs(outputDir)
 
 
 if quiet:
-	sys.stdout = open(os.devnull, 'w')
+    sys.stdout = open(os.devnull, 'w')
 
 medias = getMedias(auth, userId, includeRetweets, imageSize, since, sinceId, until, untilId)
 results = generateResults(medias, filenameFormat)
