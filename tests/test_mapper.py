@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from datetime import datetime
-from ..src.mapper import slugify, parseFilename, generateResults
+from ..src.mapper import slugify, parse_filename, generate_results
 
 
 def test_slugify_basic():
@@ -10,11 +10,11 @@ def test_slugify_basic():
 def test_slugify_hard():
     assert slugify(u'héhé/test?') == 'hehe-test-'
 
-def test_parseFilename():
-    assert parseFilename(u'[%date%] %filename%.%ext%', '123', '456', '2019-06-27 11:25:12', '2019-06-27 11:25:12', 'https://test.com/my_image.png:large') == '[2019-06-27 11-25-12] my_image.png'
-    assert parseFilename(u'[%original_date%] %filename%.%ext%', '123', '456', '2019-06-27 11:25:12', '2019-06-23 11:25:12', 'https://test.com/oops') == '[2019-06-23 11-25-12] oops.'
+def test_parse_filename():
+    assert parse_filename(u'[%date%] %filename%.%ext%', '123', '456', '2019-06-27 11:25:12', '2019-06-27 11:25:12', 'https://test.com/my_image.png:large') == '[2019-06-27 11-25-12] my_image.png'
+    assert parse_filename(u'[%original_date%] %filename%.%ext%', '123', '456', '2019-06-27 11:25:12', '2019-06-23 11:25:12', 'https://test.com/oops') == '[2019-06-23 11-25-12] oops.'
 
-def test_generateResults():
+def test_generate_results():
     data = {
         'media': [
             {
@@ -47,7 +47,7 @@ def test_generateResults():
             }
         ]
     }
-    assert generateResults(data, u'[%date%] %filename%.%ext%') == {
+    assert generate_results(data, u'[%date%] %filename%.%ext%') == {
         'text': ['Hello world!'],
         'urls': {
             'periscope': ['https://periscope.tv/test'],

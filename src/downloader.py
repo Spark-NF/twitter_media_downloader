@@ -1,17 +1,16 @@
 # coding: utf-8
 
 from __future__ import print_function
-import json
 import os
 import requests
 from tqdm import tqdm
 
 
-def download(data, outputDir, stream, showAlreadyExists):
+def download(data, output_dir, stream, show_already_exists):
     # Count all entities in input file
     total = len(data['files']) + len(data['text'])
-    for urlType in data['urls']:
-        total += len(data['urls'][urlType])
+    for url_type in data['urls']:
+        total += len(data['urls'][url_type])
 
     # Show input summary
     print('Files: {0}'.format(len(data['files'])))
@@ -24,11 +23,11 @@ def download(data, outputDir, stream, showAlreadyExists):
 
     # Download all files
     for filename, url in data['files'].items():
-        path = outputDir + '/' + filename
+        path = output_dir + '/' + filename
 
         # Ignore already downloaded files
         if os.path.exists(path) and os.path.getsize(path) > 0:
-            if showAlreadyExists:
+            if show_already_exists:
                 print('{0}: already exists'.format(filename))
             continue
 

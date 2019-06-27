@@ -3,20 +3,20 @@
 import argparse
 from datetime import datetime
 import pytest
-from ..src.args import parseDate, parseArgs
+from ..src.args import parse_date, parse_args
 
 
-def test_parseDate_invalid():
+def test_parse_date_invalid():
     with pytest.raises(argparse.ArgumentTypeError, match="Not a valid date: 'test'.") as e:
-        assert parseDate('test')
+        assert parse_date('test')
 
-def test_parseDate_valid():
-    assert parseDate('2019-06-27 13:20') == datetime(2019, 6, 27, 13, 20, 0, 0)
-    assert parseDate('2019-06-27') == datetime(2019, 6, 27, 0, 0, 0, 0)
+def test_parse_date_valid():
+    assert parse_date('2019-06-27 13:20') == datetime(2019, 6, 27, 13, 20, 0, 0)
+    assert parse_date('2019-06-27') == datetime(2019, 6, 27, 0, 0, 0, 0)
 
-def test_parseArgs():
+def test_parse_args():
     args = ['-o', 'out', '-f', '[%date%] %filename%.%ext%', '-s', 'large', '-u', 'Twitter']
-    parsed = parseArgs(args)
+    parsed = parse_args(args)
     assert parsed.userid == 'Twitter'
     assert parsed.o_userid == True
     assert parsed.output == 'out'

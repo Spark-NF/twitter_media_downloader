@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from ..src.parser import parseTweet
+from ..src.parser import parse_tweet
 
 
 class Struct:
@@ -66,7 +66,7 @@ def test_tweet():
         'retweets': 0,
         'media': []
     }
-    parseTweet(tweet, True, 'large', results)
+    parse_tweet(tweet, True, 'large', results)
     assert results['tweets'] == 1
     assert results['retweets'] == 0
     assert len(results['media']) == 1
@@ -85,7 +85,7 @@ def test_text_tweet():
         'retweets': 0,
         'media': []
     }
-    parseTweet(text_tweet, True, 'large', results)
+    parse_tweet(text_tweet, True, 'large', results)
     assert results['tweets'] == 1
     assert results['retweets'] == 0
     assert len(results['media']) == 1
@@ -99,7 +99,7 @@ def test_retweet():
         'retweets': 0,
         'media': []
     }
-    parseTweet(retweet, True, 'large', results)
+    parse_tweet(retweet, True, 'large', results)
     assert results['tweets'] == 0
     assert results['retweets'] == 1
     assert len(results['media']) == 1
@@ -112,7 +112,7 @@ def test_retweet_disabled():
         'retweets': 0,
         'media': []
     }
-    parseTweet(retweet, False, 'large', results)
+    parse_tweet(retweet, False, 'large', results)
     assert results['tweets'] == 1
     assert results['retweets'] == 0
     assert len(results['media']) == 1

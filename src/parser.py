@@ -2,12 +2,10 @@
 
 from __future__ import print_function
 import tweepy
-import json
-import os
 from .medias import VideoMedia
 
 
-def parseTweet(tweet, includeRetweets, imageSize, results):
+def parse_tweet(tweet, include_retweets, image_size, results):
     urls = {
         'tweet_id': tweet.id_str,
         'original_tweet_id': tweet.id_str,
@@ -23,7 +21,7 @@ def parseTweet(tweet, includeRetweets, imageSize, results):
         'text': '' # tweet.full_text
     }
 
-    if includeRetweets and hasattr(tweet, 'retweeted_status'):
+    if include_retweets and hasattr(tweet, 'retweeted_status'):
         tweet = tweet.retweeted_status
         urls['original_tweet_id'] = tweet.id_str
         urls['original_date'] = tweet.created_at
@@ -43,8 +41,8 @@ def parseTweet(tweet, includeRetweets, imageSize, results):
                 # Images
                 if 'sizes' in media:
                     url = media['media_url_https']
-                    if imageSize in media['sizes']:
-                        url += ":" + imageSize
+                    if image_size in media['sizes']:
+                        url += ":" + image_size
                     urls['images'].append(url)
 
     # Urls
@@ -60,15 +58,15 @@ def parseTweet(tweet, includeRetweets, imageSize, results):
                     urls['urls']['others'].append(expanded)
 
     # Remove thumbnails
-    if len(urls['videos']) == 1 and len(urls['images']) and 'video_thumb' in urls['images'][0]:
+    if len(urls['videos']) == 1 and urls['images'] and 'video_thumb' in urls['images'][0]:
         urls['images'] = urls['images'][1:]
 
-    if len(urls['videos']) == 0 and len(urls['images']) == 0 and len(urls['urls']['periscope']) == 0 and len(urls['urls']['instagram']) == 0 and hasattr(tweet, 'full_text'):
+    if not urls['videos'] and not urls['images'] and not urls['urls']['periscope'] and not urls['urls']['instagram'] and hasattr(tweet, 'full_text'):
         urls['text'] = tweet.full_text
 
     results['media'].append(urls)
 
-def getMedias(auth, userId, includeRetweets, imageSize, since, sinceId, until, untilId):
+def get_medias(auth, user_id, include_retweets, image_size, since, since_id, until, until_id):
     auth = tweepy.OAuthHandler(auth['consumer_token'], auth['consumer_secret'])
     api = tweepy.API(auth)
 
@@ -77,12 +75,12 @@ def getMedias(auth, userId, includeRetweets, imageSize, since, sinceId, until, u
         'retweets': 0,
         'media': []
     }
-    for tweet in tweepy.Cursor(api.user_timeline, id=userId, include_rts=includeRetweets, include_entities=True, tweet_mode='extended', since_id=sinceId, max_id=untilId).items():
+    for tweet in tweepy.Cursor(api.user_timeline, id=user_id, include_rts=include_retweets, include_entities=True, tweet_mode='extended', since_id=since_id, max_id=until_id).items():
         if since is not None and tweet.created_at < since:
             break
         if until is not None and tweet.created_at > until:
             continue
-        parseTweet(tweet, includeRetweets, imageSize, results)
+        parse_tweet(tweet, include_retweets, image_size, results)
 
     print('Tweets: {0}'.format(results['tweets']))
     print('Retweets: {0}'.format(results['retweets']))

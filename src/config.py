@@ -1,6 +1,5 @@
 # coding: utf-8
 
-import io
 import json
 import os.path
 
@@ -12,19 +11,19 @@ except NameError: pass
 def read(msg):
     return input(msg)
 
-def getOAuth(path):
-    if not os.path.exists(path):
-        auth = {
-            'consumer_token': '',
-            'consumer_secret': ''
-        }
-        auth['consumer_token'] = read('Token: ')
-        auth['consumer_secret'] = read('Secret: ')
-
-        with open(path, 'w') as file:
-            json.dump(auth, file, indent=4, default=lambda x:str(x))
-
-        return auth
-    else:
+def get_oauth(path):
+    if os.path.exists(path):
         data = open(path).read()
         return json.loads(data)
+
+    auth = {
+        'consumer_token': '',
+        'consumer_secret': ''
+    }
+    auth['consumer_token'] = read('Token: ')
+    auth['consumer_secret'] = read('Secret: ')
+
+    with open(path, 'w') as file:
+        json.dump(auth, file, indent=4, default=str)
+
+    return auth

@@ -1,6 +1,6 @@
 # coding: utf-8
 
-class VideoMedia:
+class VideoMedia(object):
     def bitrate(self):
         return self.obj['bitrate'] if 'bitrate' in self.obj else 0
 

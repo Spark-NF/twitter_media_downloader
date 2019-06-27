@@ -5,39 +5,30 @@ import os.path
 import sys
 
 # Import local functions
-from src.args import parseArgs
-from src.config import getOAuth
-from src.parser import getMedias
-from src.mapper import generateResults
+from src.args import parse_args
+from src.config import get_oauth
+from src.parser import get_medias
+from src.mapper import generate_results
 from src.downloader import download
 
 
-# Parse program arguments
-args = parseArgs(sys.argv[1:])
-userId = args.userid
-outputDir = os.path.join(args.output, userId + os.sep if args.o_userid else '')
-filenameFormat = args.format
-since = args.since
-sinceId = args.since_id
-until = args.until
-untilId = args.until_id
-includeRetweets = args.retweets
-imageSize = args.image_size
-quiet = args.quiet
+if __name__ == '__main__':
+    # Parse program arguments
+    args = parse_args(sys.argv[1:])
 
+    # Twitter OAuth
+    auth = get_oauth('.oauth.json')
 
-# Twitter OAuth
-auth = getOAuth('.oauth.json')
+    # Create output directory if necessary
+    outputDir = os.path.join(args.output, args.userid + os.sep if args.o_userid else '')
+    if not os.path.exists(outputDir):
+        os.makedirs(outputDir)
 
+    # Suppress output if the "quiet" flag is enabled
+    if args.quiet:
+        sys.stdout = open(os.devnull, 'w')
 
-# Create output directory if necessary
-if not os.path.exists(outputDir):
-    os.makedirs(outputDir)
-
-
-if quiet:
-    sys.stdout = open(os.devnull, 'w')
-
-medias = getMedias(auth, userId, includeRetweets, imageSize, since, sinceId, until, untilId)
-results = generateResults(medias, filenameFormat)
-download(results, outputDir, False, False)
+    # Start the download
+    medias = get_medias(auth, args.userid, args.retweets, args.image_size, args.since, args.since_id, args.until, args.until_id)
+    results = generate_results(medias, args.format)
+    download(results, outputDir, False, False)
