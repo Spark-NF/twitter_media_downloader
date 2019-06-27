@@ -1,20 +1,15 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from __future__ import print_function
 import os.path
-import io
 import sys
-import json
 
 # Import local functions
 from src.args import parseArgs
+from src.config import getOAuth
 from src.parser import getMedias
 from src.mapper import generateResults
 from src.downloader import download
-
-try: input = raw_input
-except NameError: pass
 
 
 # Parse program arguments
@@ -32,20 +27,7 @@ quiet = args.quiet
 
 
 # Twitter OAuth
-oauthFile = '.oauth.json'
-if not os.path.exists(oauthFile):
-	auth = {
-		'consumer_token': '',
-		'consumer_secret': ''
-	}
-	auth['consumer_token'] = input('Token: ')
-	auth['consumer_secret'] = input('Secret: ')
-
-	with open(oauthFile, 'w') as file:
-		json.dump(auth, file, indent=4, default=lambda x:str(x))
-else:
-	file = open(oauthFile).read()
-	auth = json.loads(file)
+auth = getOAuth('.oauth.json')
 
 
 # Create output directory if necessary
