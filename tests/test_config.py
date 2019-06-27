@@ -9,7 +9,7 @@ from ..src.config import get_oauth
 
 testFile = 'test_oauth.json'
 
-def test_get_oauth_prompt(mocker):
+def test_get_oauth_prompt():
     if os.path.exists(testFile):
         os.remove(testFile)
     with mock.patch(config.__name__ + '.read', side_effect=['my_token', 'my_secret']):
@@ -18,7 +18,7 @@ def test_get_oauth_prompt(mocker):
             'consumer_secret': 'my_secret'
         }
 
-def test_get_oauth_read(mocker):
+def test_get_oauth_read():
     auth = {
         'consumer_token': 'my_token',
         'consumer_secret': 'my_secret'

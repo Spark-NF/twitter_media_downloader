@@ -11,7 +11,7 @@ cache: pip
 
 install:
   - pip install -r requirements.txt
-  - pip install pytest
+  - pip install pytest mock
   - if [[ "$COVERAGE" == 1 ]] && [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
       pip install codecov pytest-cov
     ; fi
