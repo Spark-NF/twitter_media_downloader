@@ -7,11 +7,7 @@ import requests
 from tqdm import tqdm
 
 
-def download(inputFile, outputDir, stream, showAlreadyExists):
-	# Read input file
-	file = open(inputFile).read()
-	data = json.loads(file)
-
+def download(data, outputDir, stream, showAlreadyExists):
 	# Count all entities in input file
 	total = len(data['files']) + len(data['text'])
 	for urlType in data['urls']:

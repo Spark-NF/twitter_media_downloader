@@ -74,19 +74,14 @@ else:
 	auth = json.loads(file)
 
 
-# Create output and tmp directory if necessary
-if not os.path.exists('tmp'):
-	os.makedirs('tmp')
+# Create output directory if necessary
 if not os.path.exists(outputDir):
 	os.makedirs(outputDir)
 
 
-urlsFile = 'tmp/' + userId + '_urls.json'
-downloadsFile = 'tmp/' + userId + '_download.json'
-
 if quiet:
 	sys.stdout = open(os.devnull, 'w')
 
-getMedias(auth, userId, includeRetweets, imageSize, urlsFile, since, sinceId, until, untilId)
-generateResults(urlsFile, downloadsFile, filenameFormat)
-download(downloadsFile, outputDir, False, False)
+medias = getMedias(auth, userId, includeRetweets, imageSize, since, sinceId, until, untilId)
+results = generateResults(medias, filenameFormat)
+download(results, outputDir, False, False)

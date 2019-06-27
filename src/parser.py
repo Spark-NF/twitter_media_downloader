@@ -68,7 +68,7 @@ def parseTweet(tweet, includeRetweets, imageSize, results):
 
 	results['media'].append(urls)
 
-def getMedias(auth, userId, includeRetweets, imageSize, outputFile, since, sinceId, until, untilId):
+def getMedias(auth, userId, includeRetweets, imageSize, since, sinceId, until, untilId):
 	auth = tweepy.OAuthHandler(auth['consumer_token'], auth['consumer_secret'])
 	api = tweepy.API(auth)
 
@@ -88,5 +88,4 @@ def getMedias(auth, userId, includeRetweets, imageSize, outputFile, since, since
 	print('Retweets: {0}'.format(results['retweets']))
 	print('Parsed: {0}'.format(len(results['media'])))
 
-	with open(outputFile, 'w') as file:
-		json.dump(results, file, indent=4, default=lambda x:str(x))
+	return results
