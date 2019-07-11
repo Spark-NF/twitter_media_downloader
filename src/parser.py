@@ -41,8 +41,10 @@ def parse_tweet(tweet, include_retweets, image_size, results):
                 # Images
                 if 'sizes' in media:
                     url = media['media_url_https']
-                    if image_size in media['sizes']:
+                    if image_size in media['sizes'] or image_size == 'orig':
                         url += ":" + image_size
+                    else:
+                        print('Size `{0}` not found for image `{1}`'.format(image_size, media['media_url_https']))
                     urls['images'].append(url)
 
     # Urls

@@ -20,7 +20,7 @@ def parse_args(args):
     parser.add_argument('userid', type=str, help='the account name or ID')
     parser.add_argument('-o', '--output', type=str, metavar='DIR', help='the output directory', default='out')
     parser.add_argument('-f', '--format', type=str, metavar='FORMAT', help='the filename format', default='[%date%] %filename%.%ext%')
-    parser.add_argument('-s', '--image-size', type=str, metavar='IMAGE_SIZE', help='the preferred image size to download', default='medium', choices=['thumb', 'small', 'medium', 'large'])
+    parser.add_argument('-s', '--image-size', type=str, metavar='IMAGE_SIZE', help='the preferred image size to download', default='medium', choices=['thumb', 'small', 'medium', 'large', 'orig'])
     parser.add_argument('--since', type=parse_date, metavar='DATE', help='the start date of the search')
     parser.add_argument('--since-id', type=int, metavar='ID', help='the start ID of the search')
     parser.add_argument('--until', type=parse_date, metavar='DATE', help='the end date of the search')

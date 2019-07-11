@@ -23,7 +23,7 @@ def date_to_string(value):
 def parse_filename(format, tweet_id, original_tweet_id, date, original_date, url):
     disassembled = urlparse(url)
     file = basename(disassembled.path)
-    file = re.sub(':(?:thumb|small|medium|large)$', '', file)
+    file = re.sub(':(?:thumb|small|medium|large|orig)$', '', file)
     filename, ext = splitext(file)
     replaced = format.replace('%date%', date_to_string(date)) \
         .replace('%original_date%', date_to_string(original_date)) \
