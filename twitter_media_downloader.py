@@ -29,6 +29,6 @@ if __name__ == '__main__':
         sys.stdout = open(os.devnull, 'w')
 
     # Start the download
-    medias = get_medias(auth, args.userid, args.retweets, args.image_size, args.since, args.since_id, args.until, args.until_id)
+    medias = get_medias(auth, args.userid, args.retweets, args.image_size, args.since, args.since_id, args.until, args.until_id, args.likes)
     results = generate_results(medias, args.format)
     download(results, outputDir, False, False)

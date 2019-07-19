@@ -69,7 +69,7 @@ def parse_tweet(tweet, include_retweets, image_size, results):
 
     results['media'].append(urls)
 
-def get_medias(auth, user_id, include_retweets, image_size, since, since_id, until, until_id):
+def get_medias(auth, user_id, include_retweets, image_size, since, since_id, until, until_id, likes):
     """Get all medias for a given Twitter user."""
     auth = tweepy.OAuthHandler(auth['consumer_token'], auth['consumer_secret'])
     api = tweepy.API(auth)
@@ -79,7 +79,8 @@ def get_medias(auth, user_id, include_retweets, image_size, since, since_id, unt
         'retweets': 0,
         'media': []
     }
-    for tweet in tweepy.Cursor(api.user_timeline, id=user_id, include_rts=include_retweets, include_entities=True, tweet_mode='extended', since_id=since_id, max_id=until_id).items():
+    capi = api.favorites if likes else api.user_timeline
+    for tweet in tweepy.Cursor(capi, id=user_id, include_rts=include_retweets, include_entities=True, tweet_mode='extended', since_id=since_id, max_id=until_id).items():
         if since is not None and tweet.created_at < since:
             break
         if until is not None and tweet.created_at > until:

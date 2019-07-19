@@ -27,6 +27,7 @@ def parse_args(args):
     parser.add_argument('--until', type=parse_date, metavar='DATE', help='the end date of the search')
     parser.add_argument('--until-id', type=int, metavar='ID', help='the end ID of the search')
     parser.add_argument('-r', '--retweets', help='also download medias from retweets', action='store_true')
+    parser.add_argument('-l', '--likes', help='download user liked medias', action='store_true')
     parser.add_argument('-u', '--userid', help='append userid to output directory', action='store_true', dest='o_userid')
     parser.add_argument('-q', '--quiet', help='disable output', action='store_true')
     return parser.parse_args(args)

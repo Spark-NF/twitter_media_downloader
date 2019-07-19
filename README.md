@@ -8,6 +8,8 @@
 ## About
 Downloads all videos and images from a Twitter account.
 
+Supports downloading an user's tweets, retweets, and likes.
+
 ### Usage
 ```
 twitter_media_downloader.py [-h] [-o DIR] [-f FORMAT] [-s IMAGE_SIZE] [-r] [-u] [-q] userid
@@ -26,6 +28,7 @@ On first run, the program will ask you for your OAuth token and secret. It will 
 * `--until DATE`: the end date of the search, accepted formats: `YYYY-mm-dd HH:MM` and `YYYY-mm-dd` (defaults to 00:00)
 * `--until-id ID`: the end ID of the search (inclusive)
 * `-r`, `--retweets`: also download medias from retweets
+* `-l`, `--likes`: download an user's likes instead of its tweets
 * `-u`, `--userid`: append the userid to the output directory
 * `-q`, `--quiet`: disable output
 
