@@ -7,6 +7,7 @@ from tqdm import tqdm
 
 
 def download(data, output_dir, stream, show_already_exists):
+    """Download all files referenced in data"""
     # Count all entities in input file
     total = len(data['files']) + len(data['text'])
     for url_type in data['urls']:

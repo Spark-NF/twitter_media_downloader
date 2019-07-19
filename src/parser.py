@@ -6,6 +6,7 @@ from .medias import VideoMedia
 
 
 def parse_tweet(tweet, include_retweets, image_size, results):
+    """Parse a single tweet, returning a more usful structure containing its medias."""
     urls = {
         'tweet_id': tweet.id_str,
         'original_tweet_id': tweet.id_str,
@@ -69,6 +70,7 @@ def parse_tweet(tweet, include_retweets, image_size, results):
     results['media'].append(urls)
 
 def get_medias(auth, user_id, include_retweets, image_size, since, since_id, until, until_id):
+    """Get all medias for a given Twitter user."""
     auth = tweepy.OAuthHandler(auth['consumer_token'], auth['consumer_secret'])
     api = tweepy.API(auth)
 

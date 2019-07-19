@@ -4,8 +4,8 @@ import argparse
 from datetime import datetime
 
 
-# Datetime parser for argparse
 def parse_date(date):
+    """Datetime parser for argparse."""
     try:
         return datetime.strptime(date, "%Y-%m-%d %H:%M")
     except ValueError:
@@ -16,6 +16,7 @@ def parse_date(date):
             raise argparse.ArgumentTypeError(msg)
 
 def parse_args(args):
+    """Parse the arguments passed to twitter_media_downloader using argparse."""
     parser = argparse.ArgumentParser(description='Twitter media downloader.')
     parser.add_argument('userid', type=str, help='the account name or ID')
     parser.add_argument('-o', '--output', type=str, metavar='DIR', help='the output directory', default='out')
