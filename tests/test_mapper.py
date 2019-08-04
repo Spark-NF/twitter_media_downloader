@@ -11,8 +11,8 @@ def test_slugify_hard():
     assert slugify(u'héhé/test?') == 'hehe-test-'
 
 def test_parse_filename():
-    assert parse_filename(u'[%date%] %filename%.%ext%', '123', '456', '2019-06-27 11:25:12', '2019-06-27 11:25:12', 'https://test.com/my_image.png:large') == '[2019-06-27 11-25-12] my_image.png'
-    assert parse_filename(u'[%original_date%] %filename%.%ext%', '123', '456', '2019-06-27 11:25:12', '2019-06-23 11:25:12', 'https://test.com/oops') == '[2019-06-23 11-25-12] oops.'
+    assert parse_filename(u'[%date%] %filename%.%ext%', '123', '456', '2019-06-27 11:25:12', '2019-06-27 11:25:12', 'tweet', 'https://test.com/my_image.png:large') == '[2019-06-27 11-25-12] my_image.png'
+    assert parse_filename(u'%type%/[%original_date%] %filename%.%ext%', '123', '456', '2019-06-27 11:25:12', '2019-06-23 11:25:12', 'retweet', 'https://test.com/oops') == 'retweet/[2019-06-23 11-25-12] oops.'
 
 def test_generate_results():
     data = {
@@ -22,6 +22,7 @@ def test_generate_results():
                 'original_tweet_id': '123',
                 'date': datetime(2019, 6, 22, 12, 12, 12),
                 'original_date': datetime(2019, 6, 22, 12, 12, 12),
+                'type': 'tweet',
                 'text': '',
                 'videos': ['video_789.mp4'],
                 'images': ['my_image.png:large', 'other_image.jpg'],
@@ -36,6 +37,7 @@ def test_generate_results():
                 'original_tweet_id': '789',
                 'date': datetime(2019, 6, 24, 12, 12, 12),
                 'original_date': datetime(2019, 6, 23, 12, 12, 12),
+                'type': 'retweet',
                 'text': 'Hello world!',
                 'videos': [],
                 'images': [],

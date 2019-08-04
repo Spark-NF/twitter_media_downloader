@@ -46,6 +46,7 @@ Will download all of the `Twitter` account media files into the `out/Twitter/` d
 * `original_date`: the tweet original post date (different from `date` in the case of retweets)
 * `filename`: the file filename on the server
 * `ext`: the file extension
+* `type`: "tweet" or "retweet"
 
 ## Authors
 * [Nicolas Faure](https://github.com/Spark-NF)

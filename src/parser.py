@@ -12,6 +12,7 @@ def parse_tweet(tweet, include_retweets, image_size, results):
         'original_tweet_id': tweet.id_str,
         'date': tweet.created_at,
         'original_date': tweet.created_at,
+        'type': 'tweet',
         'videos': [],
         'images': [],
         'urls': {
@@ -26,6 +27,7 @@ def parse_tweet(tweet, include_retweets, image_size, results):
         tweet = tweet.retweeted_status
         urls['original_tweet_id'] = tweet.id_str
         urls['original_date'] = tweet.created_at
+        urls['type'] = 'retweet'
         results['retweets'] += 1
     else:
         results['tweets'] += 1
