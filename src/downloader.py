@@ -32,6 +32,11 @@ def download(data, output_dir, stream, show_already_exists):
                 print('{0}: already exists'.format(filename))
             continue
 
+        # Create directory if necessary
+        pathDir = os.path.dirname(path)
+        if not os.path.exists(pathDir):
+            os.makedirs(pathDir)
+
         r = requests.get(url, stream=stream)
         total_length = r.headers.get('content-length')
 

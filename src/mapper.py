@@ -10,8 +10,9 @@ except ImportError:
 
 
 def slugify(value):
-    import unicodedata
-    value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
+    if not isinstance(value, str):
+        import unicodedata
+        value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
     value = re.sub('[<>/\\:"|?*]', '-', value).strip().lower()
     return value
 
@@ -25,14 +26,13 @@ def parse_filename(format, tweet_id, original_tweet_id, date, original_date, url
     file = basename(disassembled.path)
     file = re.sub(':(?:thumb|small|medium|large|orig)$', '', file)
     filename, ext = splitext(file)
-    replaced = format.replace('%date%', date_to_string(date)) \
-        .replace('%original_date%', date_to_string(original_date)) \
+    replaced = format.replace('%date%', slugify(date_to_string(date))) \
+        .replace('%original_date%', slugify(date_to_string(original_date))) \
         .replace('%tweet_id%', tweet_id) \
         .replace('%original_tweet_id%', original_tweet_id) \
-        .replace('%filename%', filename) \
-        .replace('%ext%', ext[1:])
-    slugified = slugify(replaced)
-    return slugified
+        .replace('%filename%', slugify(filename)) \
+        .replace('%ext%', slugify(ext[1:]))
+    return replaced
 
 def generate_results(data, filename_format):
     results = {
