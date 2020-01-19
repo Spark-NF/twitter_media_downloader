@@ -21,18 +21,17 @@ def date_to_string(value):
         return value
     return value.strftime('%Y-%m-%d %H-%M-%S')
 
-def parse_filename(format, tweet_id, original_tweet_id, date, original_date, tweet_type, url):
+def parse_filename(format, tokens, url):
     disassembled = urlparse(url)
     file = basename(disassembled.path)
     file = re.sub(':(?:thumb|small|medium|large|orig)$', '', file)
     filename, ext = splitext(file)
-    replaced = format.replace('%date%', slugify(date_to_string(date))) \
-        .replace('%original_date%', slugify(date_to_string(original_date))) \
-        .replace('%tweet_id%', tweet_id) \
-        .replace('%original_tweet_id%', original_tweet_id) \
-        .replace('%type%', tweet_type) \
+    replaced = format.replace('%date%', slugify(date_to_string(tokens['date']))) \
+        .replace('%original_date%', slugify(date_to_string(tokens['original_date']))) \
         .replace('%filename%', slugify(filename)) \
         .replace('%ext%', slugify(ext[1:]))
+    for key in ['tweet_id', 'original_tweet_id', 'user_id', 'original_user_id', 'user_name', 'original_user_name', 'user_screen_name', 'original_user_screen_name', 'type']:
+        replaced = replaced.replace('%' + key + '%', slugify(tokens[key]))
     return replaced
 
 def generate_results(data, filename_format):
@@ -58,7 +57,7 @@ def generate_results(data, filename_format):
 
         # Files
         for url in media['images'] + media['videos']:
-            filename = parse_filename(filename_format, media['tweet_id'], media['original_tweet_id'], media['date'], media['original_date'], media['type'], url)
+            filename = parse_filename(filename_format, media, url)
             results['files'][filename] = url
 
     return results

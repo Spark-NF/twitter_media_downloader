@@ -12,6 +12,12 @@ def parse_tweet(tweet, include_retweets, image_size, results):
         'original_tweet_id': tweet.id_str,
         'date': tweet.created_at,
         'original_date': tweet.created_at,
+        'user_id': tweet.user.id_str,
+        'user_name': tweet.user.name,
+        'user_screen_name': tweet.user.screen_name,
+        'original_user_id': tweet.user.id_str,
+        'original_user_name': tweet.user.name,
+        'original_user_screen_name': tweet.user.screen_name,
         'type': 'tweet',
         'videos': [],
         'images': [],
@@ -27,6 +33,9 @@ def parse_tweet(tweet, include_retweets, image_size, results):
         tweet = tweet.retweeted_status
         urls['original_tweet_id'] = tweet.id_str
         urls['original_date'] = tweet.created_at
+        urls['original_user_id'] = tweet.user.id_str
+        urls['original_user_name'] = tweet.user.name
+        urls['original_user_screen_name'] = tweet.user.screen_name
         urls['type'] = 'retweet'
         results['retweets'] += 1
     else:
