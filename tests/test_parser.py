@@ -7,6 +7,11 @@ class Struct:
     def __init__(self, **entries):
         self.__dict__.update(entries)
 
+user = Struct(**{
+    'id_str': '456789',
+    'name': 'Super user',
+    'screen_name': 'superuser123',
+})
 tweet = Struct(**{
     'id_str': '123456',
     'created_at': '2019-06-24 20:19:35',
@@ -18,6 +23,7 @@ tweet = Struct(**{
             { 'expanded_url': 'https://periscope.tv/test' }
         ]
     },
+    'user': user,
     'extended_entities': {
         'media': [
             {
@@ -52,11 +58,13 @@ tweet = Struct(**{
 text_tweet = Struct(**{
     'id_str': '123456',
     'created_at': '2019-06-24 20:19:35',
+    'user': user,
     'full_text': 'Hello world!'
 })
 retweet = Struct(**{
     'id_str': '789',
     'created_at': '2019-06-22 12:12:12',
+    'user': user,
     'retweeted_status': tweet
 })
 

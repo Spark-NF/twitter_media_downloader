@@ -31,7 +31,8 @@ def parse_filename(format, tokens, url):
         .replace('%filename%', slugify(filename)) \
         .replace('%ext%', slugify(ext[1:]))
     for key in ['tweet_id', 'original_tweet_id', 'user_id', 'original_user_id', 'user_name', 'original_user_name', 'user_screen_name', 'original_user_screen_name', 'type']:
-        replaced = replaced.replace('%' + key + '%', slugify(tokens[key]))
+        if key in tokens:
+            replaced = replaced.replace('%' + key + '%', slugify(tokens[key]))
     return replaced
 
 def generate_results(data, filename_format):

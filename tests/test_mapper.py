@@ -11,8 +11,18 @@ def test_slugify_hard():
     assert slugify(u'héhé/test?') == 'hehe-test-'
 
 def test_parse_filename():
-    assert parse_filename(u'[%date%] %filename%.%ext%', '123', '456', '2019-06-27 11:25:12', '2019-06-27 11:25:12', 'tweet', 'https://test.com/my_image.png:large') == '[2019-06-27 11-25-12] my_image.png'
-    assert parse_filename(u'%type%/[%original_date%] %filename%.%ext%', '123', '456', '2019-06-27 11:25:12', '2019-06-23 11:25:12', 'retweet', 'https://test.com/oops') == 'retweet/[2019-06-23 11-25-12] oops.'
+    tokens = {
+        'date': '2019-06-27 11:25:12',
+        'original_date': '2019-06-27 11:25:12'
+    }
+    assert parse_filename(u'[%date%] %filename%.%ext%', tokens, 'https://test.com/my_image.png:large') == '[2019-06-27 11-25-12] my_image.png'
+
+    tokens = {
+        'date': '2019-06-27 11:25:12',
+        'original_date': '2019-06-23 11:25:12',
+        'type': 'retweet'
+    }
+    assert parse_filename(u'%type%/[%original_date%] %filename%.%ext%', tokens, 'https://test.com/oops') == 'retweet/[2019-06-23 11-25-12] oops.'
 
 def test_generate_results():
     data = {
