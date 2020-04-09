@@ -98,8 +98,9 @@ def get_medias(auth, user_id, include_retweets, image_size, since, since_id, unt
             continue
         parse_tweet(tweet, include_retweets, image_size, results)
 
-    print('Tweets: {0}'.format(results['tweets']))
-    print('Retweets: {0}'.format(results['retweets']))
-    print('Parsed: {0}'.format(len(results['media'])))
+    print('Medias for user {0}'.format(user_id))
+    print('- Tweets: {0}'.format(results['tweets']))
+    print('- Retweets: {0}'.format(results['retweets']))
+    print('- Parsed: {0}'.format(len(results['media'])))
 
     return results

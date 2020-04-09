@@ -12,13 +12,13 @@ Supports downloading an user's tweets, retweets, and likes.
 
 ### Usage
 ```
-twitter_media_downloader.py [-h] [-o DIR] [-f FORMAT] [-s IMAGE_SIZE] [-r] [-u] [-q] userid
+twitter_media_downloader.py [-h] [-o DIR] [-f FORMAT] [-s IMAGE_SIZE] [-r] [-u] [-q] userid [...]
 ```
 
 On first run, the program will ask you for your OAuth token and secret. It will then be stored in a `.oauth.json` file so that you don't need to enter them every single time.
 
 ### Arguments
-* `userid`: the account name or ID
+* `userid`: the account name or ID (1 or more)
 * `-h`, `--help`: show the help and exit
 * `-o DIR`, `--output DIR`: set the output directory where medias will be downloaded
 * `-f FORMAT`, `--format FORMAT`: the filename format, see below for the available tokens to use

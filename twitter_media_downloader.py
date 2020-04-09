@@ -19,16 +19,19 @@ if __name__ == '__main__':
     # Twitter OAuth
     auth = get_oauth('.oauth.json')
 
-    # Create output directory if necessary
-    outputDir = os.path.join(args.output, args.userid + os.sep if args.o_userid else '')
-    if not os.path.exists(outputDir):
-        os.makedirs(outputDir)
-
     # Suppress output if the "quiet" flag is enabled
     if args.quiet:
         sys.stdout = open(os.devnull, 'w')
 
-    # Start the download
-    medias = get_medias(auth, args.userid, args.retweets, args.image_size, args.since, args.since_id, args.until, args.until_id, args.likes)
-    results = generate_results(medias, args.format)
-    download(results, outputDir, False, False)
+    # For each user in the ID list
+    for user_id in args.userid:
+
+        # Create output directory if necessary
+        outputDir = os.path.join(args.output, user_id + os.sep if args.o_userid else '')
+        if not os.path.exists(outputDir):
+            os.makedirs(outputDir)
+
+        # Start the download
+        medias = get_medias(auth, user_id, args.retweets, args.image_size, args.since, args.since_id, args.until, args.until_id, args.likes)
+        results = generate_results(medias, args.format)
+        download(results, outputDir, False, True)
