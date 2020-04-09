@@ -3,7 +3,7 @@
 import argparse
 from datetime import datetime
 import pytest
-from ..src.args import parse_date, parse_args
+from ..src.args import parse_date, parse_args, parse_file_arg
 
 
 def test_parse_date_invalid():
@@ -17,8 +17,12 @@ def test_parse_date_valid():
 def test_parse_args():
     args = ['-o', 'out', '-f', '[%date%] %filename%.%ext%', '-s', 'large', '-u', 'Twitter']
     parsed = parse_args(args)
-    assert parsed.userid == 'Twitter'
+    assert parsed.userid == ['Twitter']
     assert parsed.o_userid == True
     assert parsed.output == 'out'
     assert parsed.format == '[%date%] %filename%.%ext%'
     assert parsed.image_size == 'large'
+
+def test_parse_file_arg_basic():
+    parsed = parse_file_arg('Twitter')
+    assert parsed == ['Twitter']
