@@ -3,13 +3,17 @@
 import json
 import os.path
 
-try: input = raw_input
-except NameError: pass
+try:
+    # pylint: disable=redefined-builtin
+    input = raw_input
+except NameError:
+    pass
 
 
 # Used for easier mock-ing
 def read(msg):
     return input(msg)
+
 
 def get_oauth(path):
     if os.path.exists(path):
@@ -23,7 +27,7 @@ def get_oauth(path):
     auth['consumer_token'] = read('Token: ')
     auth['consumer_secret'] = read('Secret: ')
 
-    with open(path, 'w') as file:
-        json.dump(auth, file, indent=4, default=str)
+    with open(path, 'w') as oauth_file:
+        json.dump(auth, oauth_file, indent=4, default=str)
 
     return auth

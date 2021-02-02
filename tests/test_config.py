@@ -9,6 +9,7 @@ from ..src.config import get_oauth
 
 testFile = 'test_oauth.json'
 
+
 def test_get_oauth_prompt():
     if os.path.exists(testFile):
         os.remove(testFile)
@@ -17,6 +18,7 @@ def test_get_oauth_prompt():
             'consumer_token': 'my_token',
             'consumer_secret': 'my_secret'
         }
+
 
 def test_get_oauth_read():
     auth = {

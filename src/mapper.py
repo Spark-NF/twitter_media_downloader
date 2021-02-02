@@ -16,10 +16,12 @@ def slugify(value):
     value = re.sub('[<>/\\:"|?*]', '-', value).strip().lower()
     return value
 
+
 def date_to_string(value):
     if isinstance(value, str):
         return value
     return value.strftime('%Y-%m-%d %H-%M-%S')
+
 
 def parse_filename(format, tokens, url):
     disassembled = urlparse(url)
@@ -34,6 +36,7 @@ def parse_filename(format, tokens, url):
         if key in tokens:
             replaced = replaced.replace('%' + key + '%', slugify(tokens[key]))
     return replaced
+
 
 def generate_results(data, filename_format):
     results = {

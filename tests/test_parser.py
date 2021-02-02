@@ -7,6 +7,7 @@ class Struct:
     def __init__(self, **entries):
         self.__dict__.update(entries)
 
+
 user = Struct(**{
     'id_str': '456789',
     'name': 'Super user',
@@ -18,9 +19,9 @@ tweet = Struct(**{
     'full_text': 'Hello world!',
     'entities': {
         'urls': [
-            { 'expanded_url': 'https://instagram.com/test' },
-            { 'expanded_url': 'https://www.google.com' },
-            { 'expanded_url': 'https://periscope.tv/test' }
+            {'expanded_url': 'https://instagram.com/test'},
+            {'expanded_url': 'https://www.google.com'},
+            {'expanded_url': 'https://periscope.tv/test'}
         ]
     },
     'user': user,
@@ -68,6 +69,7 @@ retweet = Struct(**{
     'retweeted_status': tweet
 })
 
+
 def test_tweet():
     results = {
         'tweets': 0,
@@ -87,6 +89,7 @@ def test_tweet():
     assert results['media'][0]['urls']['instagram'] == ['https://instagram.com/test']
     assert results['media'][0]['urls']['others'] == ['https://www.google.com']
 
+
 def test_text_tweet():
     results = {
         'tweets': 0,
@@ -101,6 +104,7 @@ def test_text_tweet():
     assert results['media'][0]['original_tweet_id'] == '123456'
     assert results['media'][0]['text'] == 'Hello world!'
 
+
 def test_retweet():
     results = {
         'tweets': 0,
@@ -113,6 +117,7 @@ def test_retweet():
     assert len(results['media']) == 1
     assert results['media'][0]['tweet_id'] == '789'
     assert results['media'][0]['original_tweet_id'] == '123456'
+
 
 def test_retweet_disabled():
     results = {

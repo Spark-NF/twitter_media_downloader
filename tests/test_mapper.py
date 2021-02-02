@@ -7,8 +7,10 @@ from ..src.mapper import slugify, parse_filename, generate_results
 def test_slugify_basic():
     assert slugify(u'test') == 'test'
 
+
 def test_slugify_hard():
     assert slugify(u'héhé/test?') == 'hehe-test-'
+
 
 def test_parse_filename():
     tokens = {
@@ -23,6 +25,7 @@ def test_parse_filename():
         'type': 'retweet'
     }
     assert parse_filename(u'%type%/[%original_date%] %filename%.%ext%', tokens, 'https://test.com/oops') == 'retweet/[2019-06-23 11-25-12] oops.'
+
 
 def test_generate_results():
     data = {

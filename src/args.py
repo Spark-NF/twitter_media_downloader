@@ -15,6 +15,7 @@ def parse_date(date):
             msg = "Not a valid date: '{0}'.".format(date)
             raise argparse.ArgumentTypeError(msg)
 
+
 def parse_args(args):
     """Parse the arguments passed to twitter_media_downloader using argparse."""
     parser = argparse.ArgumentParser(description='Twitter media downloader.')
@@ -32,11 +33,12 @@ def parse_args(args):
     parser.add_argument('-q', '--quiet', help='disable output', action='store_true')
     return parser.parse_args(args)
 
+
 def parse_file_arg(arg):
     if not isinstance(arg, list):
         arg = [arg]
     first = arg[0]
     if first[0] == '@':
-        with open(first[1:]) as f:
-            arg = f.readlines()
+        with open(first[1:]) as arg_file:
+            arg = arg_file.readlines()
     return [x.strip() for x in arg]

@@ -26,7 +26,7 @@ def parse_tweet(tweet, include_retweets, image_size, results):
             'instagram': [],
             'others': []
         },
-        'text': '' # tweet.full_text
+        'text': ''  # tweet.full_text
     }
 
     if include_retweets and hasattr(tweet, 'retweeted_status'):
@@ -79,6 +79,7 @@ def parse_tweet(tweet, include_retweets, image_size, results):
         urls['text'] = tweet.full_text
 
     results['media'].append(urls)
+
 
 def get_medias(auth, user_id, include_retweets, image_size, since, since_id, until, until_id, likes):
     """Get all medias for a given Twitter user."""
