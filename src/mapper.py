@@ -9,8 +9,15 @@ except ImportError:
     from urlparse import urlparse
 
 
+def is_unicode(value):
+    try:
+        return isinstance(value, unicode)
+    except NameError:
+        return isinstance(value, str)
+
+
 def slugify(value):
-    if not isinstance(value, str):
+    if is_unicode(value):
         import unicodedata
         value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
     value = re.sub('[<>/\\:"|?*]', '-', value).strip().lower()
