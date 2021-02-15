@@ -19,7 +19,7 @@ def parse_date(date):
 def parse_args(args):
     """Parse the arguments passed to twitter_media_downloader using argparse."""
     parser = argparse.ArgumentParser(description='Twitter media downloader.')
-    parser.add_argument('userid', type=str, nargs='+', help='the account name or ID')
+    parser.add_argument('userid', type=str, nargs='+', help='the account name or ID, prefix with @ to open as file (one account per line)')
     parser.add_argument('-o', '--output', type=str, metavar='DIR', help='the output directory', default='out')
     parser.add_argument('-f', '--format', type=str, metavar='FORMAT', help='the filename format', default='[%date%] %filename%.%ext%')
     parser.add_argument('-s', '--image-size', type=str, metavar='IMAGE_SIZE', help='the preferred image size to download', default='medium', choices=['thumb', 'small', 'medium', 'large', 'orig'])
