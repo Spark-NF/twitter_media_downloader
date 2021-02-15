@@ -37,8 +37,11 @@ def parse_args(args):
 def parse_file_arg(arg):
     if not isinstance(arg, list):
         arg = [arg]
-    first = arg[0]
-    if first[0] == '@':
-        with open(first[1:]) as arg_file:
-            arg = arg_file.readlines()
-    return [x.strip() for x in arg]
+    ret = []
+    for val in arg:
+        if val[0] == '@':
+            with open(val[1:]) as arg_file:
+                ret.extend(arg_file.readlines())
+        else:
+            ret.append(val)
+    return [x.strip() for x in ret if x.strip() != '']
