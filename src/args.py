@@ -31,6 +31,8 @@ def parse_args(args):
     parser.add_argument('-l', '--likes', help='download user liked medias', action='store_true')
     parser.add_argument('-u', '--userid', help='append userid to output directory', action='store_true', dest='o_userid')
     parser.add_argument('-q', '--quiet', help='disable output', action='store_true')
+    
+    parser.add_argument('-c', '--credential', type=str, metavar='FILE', help='Location of credential json', default='.oauth.json')
     return parser.parse_args(args)
 
 

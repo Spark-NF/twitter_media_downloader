@@ -18,7 +18,7 @@ if __name__ == '__main__':
     user_ids = parse_file_arg(args.userid)
 
     # Twitter OAuth
-    auth = get_oauth('.oauth.json')
+    auth = get_oauth(args.credential)
 
     # Suppress output if the "quiet" flag is enabled
     if args.quiet:
