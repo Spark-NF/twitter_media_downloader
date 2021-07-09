@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 
 def parse_tweet(tweet, include_retweets, image_size, results):
-    """Parse a single tweet, returning a more usful structure containing its medias."""
+    """Parse a single tweet, returning a more useful structure containing its medias."""
     urls = {
         'tweet_id': tweet.id_str,
         'original_tweet_id': tweet.id_str,
