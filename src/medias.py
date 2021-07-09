@@ -4,6 +4,7 @@
 Module to handle video medias.
 """
 
+
 class VideoMedia(object):
     """Basic class that allows to compare video medias by bitrate."""
 
