@@ -3,6 +3,7 @@
 from __future__ import print_function
 import tweepy
 from .medias import VideoMedia
+from tqdm import tqdm
 
 
 def parse_tweet(tweet, include_retweets, image_size, results):
@@ -92,12 +93,15 @@ def get_medias(auth, user_id, include_retweets, image_size, since, since_id, unt
         'media': []
     }
     capi = api.favorites if likes else api.user_timeline
+    pbar = tqdm(unit=' tweets')
     for tweet in tweepy.Cursor(capi, id=user_id, include_rts=include_retweets, include_entities=True, tweet_mode='extended', since_id=since_id, max_id=until_id).items():
         if since is not None and tweet.created_at < since:
             break
         if until is not None and tweet.created_at > until:
             continue
+        pbar.update(1)
         parse_tweet(tweet, include_retweets, image_size, results)
+    pbar.close()
 
     print('Medias for user {0}'.format(user_id))
     print('- Tweets: {0}'.format(results['tweets']))
