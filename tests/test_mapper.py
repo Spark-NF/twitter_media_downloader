@@ -1,18 +1,25 @@
 # coding: utf-8
 
+"""
+Unit tests for the mapper module.
+"""
+
 from datetime import datetime
 from ..src.mapper import slugify, parse_filename, generate_results
 
 
 def test_slugify_basic():
+    """Ensure that the slugify method works for basic use cases."""
     assert slugify(u'test') == 'test'
 
 
 def test_slugify_hard():
+    """Ensure that diacritics and punctuation are properly slugified."""
     assert slugify(u'héhé/test?') == 'hehe-test-'
 
 
 def test_parse_filename():
+    """Ensure that filenames can properly be generated from a list of tokens."""
     tokens = {
         'date': '2019-06-27 11:25:12',
         'original_date': '2019-06-27 11:25:12'
@@ -28,6 +35,7 @@ def test_parse_filename():
 
 
 def test_generate_results():
+    """Ensure that the generate_results works when provided a list of raw tweets."""
     data = {
         'media': [
             {

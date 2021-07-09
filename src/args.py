@@ -1,5 +1,9 @@
 # coding: utf-8
 
+"""
+CLI arguments parser.
+"""
+
 import argparse
 from datetime import datetime
 
@@ -35,6 +39,7 @@ def parse_args(args):
 
 
 def parse_file_arg(arg):
+    """Handles @file format for users, to load the list of users from said file, one per line."""
     if not isinstance(arg, list):
         arg = [arg]
     ret = []

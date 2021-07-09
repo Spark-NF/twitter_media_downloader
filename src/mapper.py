@@ -1,5 +1,9 @@
 # coding: utf-8
 
+"""
+Takes a list of parsed tweets and generate list of files to download and their target location.
+"""
+
 import re
 from os.path import splitext, basename
 
@@ -10,6 +14,7 @@ except ImportError:
 
 
 def is_unicode(value):
+    """Checks if a string is an unicode string."""
     try:
         return isinstance(value, unicode)
     except NameError:
@@ -17,6 +22,7 @@ def is_unicode(value):
 
 
 def slugify(value):
+    """Converts a string with special characters to a string without that can more easily be used as a filename."""
     if is_unicode(value):
         import unicodedata
         value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
@@ -25,12 +31,14 @@ def slugify(value):
 
 
 def date_to_string(value):
+    """Converts a datetime instance to a string."""
     if isinstance(value, str):
         return value
     return value.strftime('%Y-%m-%d %H-%M-%S')
 
 
 def parse_filename(filename_format, tokens, url):
+    """Uses a list of tokens and a filename format to generate a filename."""
     disassembled = urlparse(url)
     full_filename = basename(disassembled.path)
     full_filename = re.sub(':(?:thumb|small|medium|large|orig)$', '', full_filename)
@@ -46,6 +54,7 @@ def parse_filename(filename_format, tokens, url):
 
 
 def generate_results(data, filename_format):
+    """Takes a list of tweet information and generate a list of files to download and their target location."""
     results = {
         'files': {},
         'urls': {

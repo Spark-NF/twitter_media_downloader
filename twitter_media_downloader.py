@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+"""Downloads all videos and images from a Twitter account."""
+
 import os.path
 import sys
 

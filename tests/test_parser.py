@@ -1,10 +1,15 @@
 # coding: utf-8
 
+"""
+Unit tests for the parser module.
+"""
+
 from ..src.parser import parse_tweet
 
 
 # pylint: disable=old-style-class,too-few-public-methods
 class Struct:
+    """Basic class to convert a struct to a dict."""
     def __init__(self, **entries):
         self.__dict__.update(entries)
 
@@ -72,6 +77,7 @@ RETWEET = Struct(**{
 
 
 def test_tweet():
+    """Ensure that tweets with images and video are properly parsed."""
     results = {
         'tweets': 0,
         'retweets': 0,
@@ -92,6 +98,7 @@ def test_tweet():
 
 
 def test_text_tweet():
+    """Ensure that text tweets are properly parsed."""
     results = {
         'tweets': 0,
         'retweets': 0,
@@ -107,6 +114,7 @@ def test_text_tweet():
 
 
 def test_retweet():
+    """Ensure that retweets are properly parsed when enabled."""
     results = {
         'tweets': 0,
         'retweets': 0,
@@ -121,6 +129,7 @@ def test_retweet():
 
 
 def test_retweet_disabled():
+    """Ensure that retweets are not treated as such when they are disabled."""
     results = {
         'tweets': 0,
         'retweets': 0,

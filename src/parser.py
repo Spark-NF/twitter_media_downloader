@@ -1,5 +1,9 @@
 # coding: utf-8
 
+"""
+Loads and parses tweets using the Twitter API.
+"""
+
 from __future__ import print_function
 import tweepy
 from tqdm import tqdm

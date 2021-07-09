@@ -1,5 +1,9 @@
 # coding: utf-8
 
+"""
+Helper methods to get the user's OAuth credentials.
+"""
+
 import json
 import os.path
 
@@ -10,12 +14,13 @@ except NameError:
     pass
 
 
-# Used for easier mock-ing
 def read(msg):
+    """Wrapper around the input module for easier mock-ing."""
     return input(msg)
 
 
 def get_oauth(path):
+    """Loads the OAuth credentials from the file if it exists, otherwise asks the user for them."""
     if os.path.exists(path):
         data = open(path).read()
         return json.loads(data)
