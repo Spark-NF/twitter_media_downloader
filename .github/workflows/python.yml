@@ -34,11 +34,14 @@ jobs:
           python -m pip install flake8 pylint pytest mock codecov pytest-cov
           pip install -r requirements.txt
 
-      - name: Lint
+      - name: Lint (flake8)
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=15 --max-line-length=200 --show-source --statistics
-          pylint --max-line-length=200 --disable=relative-import,duplicate-code,too-many-branches,too-many-arguments **/*.py
+
+      - name: Lint (pylint)
+        if: ${{ matrix.python-version != 3.5 }}
+        run: pylint --max-line-length=200 --disable=relative-import,duplicate-code,too-many-branches,too-many-arguments **/*.py
 
       - name: Test
         run: pytest --cov-config=tests/.coveragerc --cov=. tests
