@@ -93,7 +93,7 @@ def get_medias(auth, user_id, include_retweets, image_size, since, since_id, unt
         'media': []
     }
     capi = api.favorites if likes else api.user_timeline
-    pbar = tqdm(unit=' tweets')
+    pbar = tqdm(desc='Resolving', unit=' tweets')
     for tweet in tweepy.Cursor(capi, id=user_id, include_rts=include_retweets, include_entities=True, tweet_mode='extended', since_id=since_id, max_id=until_id).items():
         if since is not None and tweet.created_at < since:
             break
