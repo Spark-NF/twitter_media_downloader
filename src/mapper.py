@@ -30,12 +30,12 @@ def date_to_string(value):
     return value.strftime('%Y-%m-%d %H-%M-%S')
 
 
-def parse_filename(format, tokens, url):
+def parse_filename(filename_format, tokens, url):
     disassembled = urlparse(url)
-    file = basename(disassembled.path)
-    file = re.sub(':(?:thumb|small|medium|large|orig)$', '', file)
-    filename, ext = splitext(file)
-    replaced = format.replace('%date%', slugify(date_to_string(tokens['date']))) \
+    full_filename = basename(disassembled.path)
+    full_filename = re.sub(':(?:thumb|small|medium|large|orig)$', '', full_filename)
+    filename, ext = splitext(full_filename)
+    replaced = filename_format.replace('%date%', slugify(date_to_string(tokens['date']))) \
         .replace('%original_date%', slugify(date_to_string(tokens['original_date']))) \
         .replace('%filename%', slugify(filename)) \
         .replace('%ext%', slugify(ext[1:]))

@@ -2,8 +2,8 @@
 
 from __future__ import print_function
 import tweepy
-from .medias import VideoMedia
 from tqdm import tqdm
+from .medias import VideoMedia
 
 
 def parse_tweet(tweet, include_retweets, image_size, results):

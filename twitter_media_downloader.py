@@ -14,25 +14,25 @@ from src.downloader import download
 
 if __name__ == '__main__':
     # Parse program arguments
-    args = parse_args(sys.argv[1:])
-    user_ids = parse_file_arg(args.userid)
+    ARGS = parse_args(sys.argv[1:])
+    USER_IDS = parse_file_arg(ARGS.userid)
 
     # Twitter OAuth
-    auth = get_oauth('.oauth.json')
+    AUTH = get_oauth('.oauth.json')
 
     # Suppress output if the "quiet" flag is enabled
-    if args.quiet:
+    if ARGS.quiet:
         sys.stdout = open(os.devnull, 'w')
 
     # For each user in the ID list
-    for user_id in user_ids:
+    for user_id in USER_IDS:
 
         # Create output directory if necessary
-        outputDir = os.path.join(args.output, user_id + os.sep if args.o_userid else '')
+        outputDir = os.path.join(ARGS.output, user_id + os.sep if ARGS.o_userid else '')
         if not os.path.exists(outputDir):
             os.makedirs(outputDir)
 
         # Start the download
-        medias = get_medias(auth, user_id, args.retweets, args.image_size, args.since, args.since_id, args.until, args.until_id, args.likes)
-        results = generate_results(medias, args.format)
+        medias = get_medias(AUTH, user_id, ARGS.retweets, ARGS.image_size, ARGS.since, ARGS.since_id, ARGS.until, ARGS.until_id, ARGS.likes)
+        results = generate_results(medias, ARGS.format)
         download(results, outputDir, False, True)

@@ -3,17 +3,18 @@
 from ..src.parser import parse_tweet
 
 
+# pylint: disable=old-style-class,too-few-public-methods
 class Struct:
     def __init__(self, **entries):
         self.__dict__.update(entries)
 
 
-user = Struct(**{
+USER = Struct(**{
     'id_str': '456789',
     'name': 'Super user',
     'screen_name': 'superuser123',
 })
-tweet = Struct(**{
+TWEET = Struct(**{
     'id_str': '123456',
     'created_at': '2019-06-24 20:19:35',
     'full_text': 'Hello world!',
@@ -24,7 +25,7 @@ tweet = Struct(**{
             {'expanded_url': 'https://periscope.tv/test'}
         ]
     },
-    'user': user,
+    'user': USER,
     'extended_entities': {
         'media': [
             {
@@ -56,17 +57,17 @@ tweet = Struct(**{
         ]
     }
 })
-text_tweet = Struct(**{
+TEXT_TWEET = Struct(**{
     'id_str': '123456',
     'created_at': '2019-06-24 20:19:35',
-    'user': user,
+    'user': USER,
     'full_text': 'Hello world!'
 })
-retweet = Struct(**{
+RETWEET = Struct(**{
     'id_str': '789',
     'created_at': '2019-06-22 12:12:12',
-    'user': user,
-    'retweeted_status': tweet
+    'user': USER,
+    'retweeted_status': TWEET
 })
 
 
@@ -76,7 +77,7 @@ def test_tweet():
         'retweets': 0,
         'media': []
     }
-    parse_tweet(tweet, True, 'large', results)
+    parse_tweet(TWEET, True, 'large', results)
     assert results['tweets'] == 1
     assert results['retweets'] == 0
     assert len(results['media']) == 1
@@ -96,7 +97,7 @@ def test_text_tweet():
         'retweets': 0,
         'media': []
     }
-    parse_tweet(text_tweet, True, 'large', results)
+    parse_tweet(TEXT_TWEET, True, 'large', results)
     assert results['tweets'] == 1
     assert results['retweets'] == 0
     assert len(results['media']) == 1
@@ -111,7 +112,7 @@ def test_retweet():
         'retweets': 0,
         'media': []
     }
-    parse_tweet(retweet, True, 'large', results)
+    parse_tweet(RETWEET, True, 'large', results)
     assert results['tweets'] == 0
     assert results['retweets'] == 1
     assert len(results['media']) == 1
@@ -125,7 +126,7 @@ def test_retweet_disabled():
         'retweets': 0,
         'media': []
     }
-    parse_tweet(retweet, False, 'large', results)
+    parse_tweet(RETWEET, False, 'large', results)
     assert results['tweets'] == 1
     assert results['retweets'] == 0
     assert len(results['media']) == 1

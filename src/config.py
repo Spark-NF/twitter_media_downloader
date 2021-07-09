@@ -4,7 +4,7 @@ import json
 import os.path
 
 try:
-    # pylint: disable=redefined-builtin
+    # pylint: disable=redefined-builtin,invalid-name
     input = raw_input
 except NameError:
     pass

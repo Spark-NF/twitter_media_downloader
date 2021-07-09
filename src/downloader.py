@@ -24,7 +24,7 @@ def download(data, output_dir, stream, show_already_exists):
 
     # Download all files
     for filename, url in data['files'].items():
-        path = output_dir + '/' + filename
+        path = os.path.join(output_dir, filename)
 
         # Ignore already downloaded files
         if os.path.exists(path) and os.path.getsize(path) > 0:
@@ -33,21 +33,21 @@ def download(data, output_dir, stream, show_already_exists):
             continue
 
         # Create directory if necessary
-        pathDir = os.path.dirname(path)
-        if not os.path.exists(pathDir):
-            os.makedirs(pathDir)
+        path_dir = os.path.dirname(path)
+        if not os.path.exists(path_dir):
+            os.makedirs(path_dir)
 
-        r = requests.get(url, stream=stream)
-        total_length = r.headers.get('content-length')
+        request = requests.get(url, stream=stream)
+        total_length = request.headers.get('content-length')
 
-        with open(path, 'wb') as f:
+        with open(path, 'wb') as file_descriptor:
             if not stream or total_length is None:
-                f.write(r.content)
+                file_descriptor.write(request.content)
                 print('{0}: ok'.format(filename))
             else:
                 # Progress bar
-                for data in tqdm(iterable=r.iter_content(), unit='b', unit_scale=True, total=int(total_length), desc=filename):
-                    f.write(data)
+                for progress in tqdm(iterable=request.iter_content(), unit='b', unit_scale=True, total=int(total_length), desc=filename):
+                    file_descriptor.write(progress)
 
     # Download periscope
     if data['urls']['periscope']:
@@ -56,4 +56,3 @@ def download(data, output_dir, stream, show_already_exists):
             processor.process(data['urls']['periscope'])
         except ImportError:
             print('You need the `{0}` module to download Periscope videos'.format('pyriscope'))
-        pass
