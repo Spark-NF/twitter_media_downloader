@@ -16,6 +16,7 @@ twitter_media_downloader.py [-h] [-o DIR] [-f FORMAT] [-s IMAGE_SIZE] [-r] [-u] 
 ```
 
 On first run, the program will ask you for your OAuth consumer key and consumer secret. It will then be stored in a `.oauth.json` file so that you don't need to enter them every single time.
+It will also ask your access token and access token secret. Those are only required if you are planning to access protected accounts.
 
 ### Arguments
 * `userid`: the account name or ID (1 or more), if it starts with a `@` it will be opened as a file (one account per line)

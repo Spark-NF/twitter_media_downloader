@@ -18,10 +18,12 @@ def test_get_oauth_prompt():
     """Ensure that the user prompt for its OAuth credentials works correctly."""
     if os.path.exists(TEST_FILE):
         os.remove(TEST_FILE)
-    with mock.patch(config.__name__ + '.read', side_effect=['my_key', 'my_secret']):
+    with mock.patch(config.__name__ + '.read', side_effect=['my_key', 'my_secret', 'my_token', 'my_token_secret']):
         assert get_oauth(TEST_FILE) == {
             'consumer_key': 'my_key',
-            'consumer_secret': 'my_secret'
+            'consumer_secret': 'my_secret',
+            'access_token': 'my_token',
+            'access_token_secret': 'my_token_secret'
         }
 
 
@@ -29,7 +31,9 @@ def test_get_oauth_read():
     """Ensure that the get_oauth function properly returns the contents of the JSON auth config file."""
     auth = {
         'consumer_key': 'my_key',
-        'consumer_secret': 'my_secret'
+        'consumer_secret': 'my_secret',
+        'access_token': 'my_token',
+        'access_token_secret': 'my_token_secret'
     }
     with open(TEST_FILE, 'w') as file_descriptor:
         json.dump(auth, file_descriptor)

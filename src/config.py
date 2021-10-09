@@ -26,10 +26,14 @@ def get_oauth(path):
 
     auth = {
         'consumer_key': '',
-        'consumer_secret': ''
+        'consumer_secret': '',
+        'access_token': '',
+        'access_token_secret': ''
     }
     auth['consumer_key'] = read('Consumer key: ')
     auth['consumer_secret'] = read('Consumer secret: ')
+    auth['access_token'] = read('Access token: ')
+    auth['access_token_secret'] = read('Access token secret: ')
 
     write_oauth(path, auth)
     return auth
