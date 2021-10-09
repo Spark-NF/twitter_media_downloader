@@ -89,7 +89,8 @@ def parse_tweet(tweet, include_retweets, image_size, results):
 def get_medias(auth, user_id, include_retweets, image_size, since, since_id, until, until_id, likes):
     """Get all medias for a given Twitter user."""
     tweepy_auth = tweepy.OAuthHandler(auth['consumer_key'], auth['consumer_secret'])
-    tweepy_auth.set_access_token(auth['access_token'], auth['access_token_secret'])
+    if 'access_token' in auth and 'access_token_secret' in auth:
+        tweepy_auth.set_access_token(auth['access_token'], auth['access_token_secret'])
 
     api = tweepy.API(tweepy_auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
