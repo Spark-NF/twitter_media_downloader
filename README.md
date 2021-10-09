@@ -15,7 +15,7 @@ Supports downloading an user's tweets, retweets, and likes.
 twitter_media_downloader.py [-h] [-o DIR] [-f FORMAT] [-s IMAGE_SIZE] [-r] [-u] [-q] userid [...]
 ```
 
-On first run, the program will ask you for your OAuth token and secret. It will then be stored in a `.oauth.json` file so that you don't need to enter them every single time.
+On first run, the program will ask you for your OAuth consumer key and consumer secret. It will then be stored in a `.oauth.json` file so that you don't need to enter them every single time.
 
 ### Arguments
 * `userid`: the account name or ID (1 or more), if it starts with a `@` it will be opened as a file (one account per line)

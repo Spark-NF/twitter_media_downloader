@@ -22,17 +22,32 @@ def read(msg):
 def get_oauth(path):
     """Loads the OAuth credentials from the file if it exists, otherwise asks the user for them."""
     if os.path.exists(path):
-        data = open(path).read()
-        return json.loads(data)
+        return read_oauth(path)
 
     auth = {
-        'consumer_token': '',
+        'consumer_key': '',
         'consumer_secret': ''
     }
-    auth['consumer_token'] = read('Token: ')
-    auth['consumer_secret'] = read('Secret: ')
+    auth['consumer_key'] = read('Consumer key: ')
+    auth['consumer_secret'] = read('Consumer secret: ')
 
+    write_oauth(path, auth)
+    return auth
+
+
+def read_oauth(path):
+    data = open(path).read()
+    parsed = json.loads(data)
+
+    # Rename "consumer_token" to "consumer_key"
+    if 'consumer_token' in parsed:
+        parsed['consumer_key'] = parsed['consumer_token']
+        del parsed['consumer_token']
+        write_oauth(path, parsed)
+
+    return parsed
+
+
+def write_oauth(path, auth):
     with open(path, 'w') as oauth_file:
         json.dump(auth, oauth_file, indent=4, default=str)
-
-    return auth
