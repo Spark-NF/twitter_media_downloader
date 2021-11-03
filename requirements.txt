@@ -1,4 +1,4 @@
-requests
-tqdm
-tweepy
+requests ~= 2.22
+tqdm ~= 4.32
+tweepy ~= 3.7
 argparse
