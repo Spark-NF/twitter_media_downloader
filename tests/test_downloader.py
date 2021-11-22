@@ -5,11 +5,12 @@
 Unit tests for the downloader module.
 """
 
+import os
 import mock
 from ..src.downloader import download
 
 
-def mocked_requests_get(*args):
+def mocked_requests_get(*args, **kwargs): # pylint: disable=unused-argument
     """Mock all requests HTTP calls by returning the URL as contents."""
     class MockResponse(object):
         """Mock response for the requests module."""
@@ -35,5 +36,26 @@ def test_download():
             '[2019-06-22 12-12-12] other_image.jpg': 'http://test.com/other_image.jpg'
         }
     }
+    with mock.patch('requests.get', side_effect=mocked_requests_get):
+        download(data, 'test_out/', False, True)
+
+
+def test_download_already_exists():
+    """Ensure that the download function does not download files that already exist."""
+    data = {
+        'text': [],
+        'urls': {
+            'periscope': [],
+            'instagram': [],
+            'others': []
+        },
+        'files': {
+            'test.mp4': 'http://test.com/test.mp4',
+        }
+    }
+    if not os.path.exists('test_out'):
+        os.makedirs('test_out')
+    with open('test_out/test.mp4', 'a') as test_file:
+        test_file.write('test')
     with mock.patch('requests.get', side_effect=mocked_requests_get):
         download(data, 'test_out/', False, True)
