@@ -41,7 +41,7 @@ jobs:
 
       - name: Lint (pylint)
         if: ${{ matrix.python-version != 3.5 }}
-        run: pylint --max-line-length=200 --disable=relative-import,duplicate-code,too-many-branches,too-many-arguments **/*.py
+        run: pylint --max-line-length=200 --disable=relative-import,duplicate-code,too-many-branches,too-many-arguments,too-few-public-methods **/*.py
 
       - name: Test
         run: pytest --cov-config=tests/.coveragerc --cov=. tests
