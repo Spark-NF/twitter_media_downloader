@@ -1,4 +1,5 @@
-# coding: utf-8
+# !/opt/homebrew/bin/env python3
+# -*- coding: utf-8 -*-
 
 """
 Loads and parses tweets using the Twitter API.
@@ -92,7 +93,8 @@ def get_medias(auth, user_id, include_retweets, image_size, since, since_id, unt
     if 'access_token' in auth and 'access_token_secret' in auth:
         tweepy_auth.set_access_token(auth['access_token'], auth['access_token_secret'])
 
-    api = tweepy.API(tweepy_auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+    api = tweepy.API(tweepy_auth, wait_on_rate_limit=True)
+    # wait_on_rate_limit_notify=True
 
     results = {
         'tweets': 0,
@@ -101,7 +103,8 @@ def get_medias(auth, user_id, include_retweets, image_size, since, since_id, unt
     }
     capi = api.favorites if likes else api.user_timeline
     pbar = tqdm(desc='Resolving', unit=' tweets')
-    for tweet in tweepy.Cursor(capi, id=user_id, include_rts=include_retweets, include_entities=True, tweet_mode='extended', since_id=since_id, max_id=until_id).items():
+    # include_entities=True
+    for tweet in tweepy.Cursor(capi, screen_name=user_id, include_rts=include_retweets, tweet_mode='extended', since_id=since_id, max_id=until_id).items():
         if since is not None and tweet.created_at < since:
             break
         if until is not None and tweet.created_at > until:
@@ -110,9 +113,15 @@ def get_medias(auth, user_id, include_retweets, image_size, since, since_id, unt
         parse_tweet(tweet, include_retweets, image_size, results)
     pbar.close()
 
-    print('Medias for user {0}'.format(user_id))
-    print('- Tweets: {0}'.format(results['tweets']))
-    print('- Retweets: {0}'.format(results['retweets']))
-    print('- Parsed: {0}'.format(len(results['media'])))
+    print(f'Link to user account: https://twitter.com/{user_id}')
+    print(f'Medias for user {user_id}')
+    
+    results_tweets = results['tweets']
+    results_retweets = results['retweets']
+    results_media = results['media']
+    
+    print(f'- Tweets: {results_tweets}')
+    print(f'- Retweets: {results_retweets}')
+    print(f'- Parsed: {len(results_media)}')
 
     return results
