@@ -6,9 +6,10 @@ CLI arguments parser.
 
 import argparse
 from datetime import datetime
+from typing import Any, List, Union
 
 
-def parse_date(date):
+def parse_date(date: str) -> datetime:
     """Datetime parser for argparse."""
     try:
         return datetime.strptime(date, "%Y-%m-%d %H:%M")
@@ -20,7 +21,7 @@ def parse_date(date):
             raise argparse.ArgumentTypeError(msg) from exc
 
 
-def parse_args(args):
+def parse_args(args: List[str]) -> Any:
     """Parse the arguments passed to twitter_media_downloader using argparse."""
     parser = argparse.ArgumentParser(description='Twitter media downloader.')
     parser.add_argument('userid', type=str, nargs='+', help='the account name or ID, prefix with @ to open as file (one account per line)')
@@ -38,7 +39,7 @@ def parse_args(args):
     return parser.parse_args(args)
 
 
-def parse_file_arg(arg):
+def parse_file_arg(arg: Union[str, List[str]]) -> List[str]:
     """Handles @file format for users, to load the list of users from said file, one per line."""
     if not isinstance(arg, list):
         arg = [arg]

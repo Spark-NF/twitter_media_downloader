@@ -5,7 +5,9 @@ Takes a list of parsed tweets and generate list of files to download and their t
 """
 
 import re
+from datetime import datetime
 from os.path import splitext, basename
+from typing import Any, Dict, Union
 
 try:
     from urllib.parse import urlparse
@@ -13,7 +15,7 @@ except ImportError:
     from urlparse import urlparse
 
 
-def is_unicode(value):
+def is_unicode(value: str) -> bool:
     """Checks if a string is an unicode string."""
     try:
         return isinstance(value, unicode)
@@ -21,7 +23,7 @@ def is_unicode(value):
         return isinstance(value, str)
 
 
-def slugify(value):
+def slugify(value: str) -> str:
     """Converts a string with special characters to a string without that can more easily be used as a filename."""
     if is_unicode(value):
         import unicodedata
@@ -30,14 +32,14 @@ def slugify(value):
     return value
 
 
-def date_to_string(value):
+def date_to_string(value: Union[str, datetime]) -> str:
     """Converts a datetime instance to a string."""
     if isinstance(value, str):
         return value
     return value.strftime('%Y-%m-%d %H-%M-%S')
 
 
-def parse_filename(filename_format, tokens, url):
+def parse_filename(filename_format: str, tokens: Dict[str, Union[str, datetime]], url: str) -> str:
     """Uses a list of tokens and a filename format to generate a filename."""
     disassembled = urlparse(url)
     full_filename = basename(disassembled.path)
@@ -49,11 +51,13 @@ def parse_filename(filename_format, tokens, url):
         .replace('%ext%', slugify(ext[1:]))
     for key in ['tweet_id', 'original_tweet_id', 'user_id', 'original_user_id', 'user_name', 'original_user_name', 'user_screen_name', 'original_user_screen_name', 'type']:
         if key in tokens:
-            replaced = replaced.replace('%' + key + '%', slugify(tokens[key]))
+            value = tokens[key]
+            str_value = date_to_string(value) if isinstance(value, datetime) else value
+            replaced = replaced.replace('%' + key + '%', slugify(str_value))
     return replaced
 
 
-def generate_results(data, filename_format):
+def generate_results(data: Dict[str, Any], filename_format: str) -> Dict[str, Any]:
     """Takes a list of tweet information and generate a list of files to download and their target location."""
     results = {
         'files': {},

@@ -5,12 +5,14 @@ Loads and parses tweets using the Twitter API.
 """
 
 from __future__ import print_function
+from datetime import datetime
+from typing import Any, Dict
 import tweepy
 from tqdm import tqdm
 from .medias import VideoMedia
 
 
-def parse_tweet(tweet, include_retweets, image_size, results):
+def parse_tweet(tweet: tweepy.models.Status, include_retweets: bool, image_size: str, results: Dict[str, Any]) -> None:
     """Parse a single tweet, returning a more useful structure containing its medias."""
     urls = {
         'tweet_id': tweet.id_str,
@@ -86,7 +88,7 @@ def parse_tweet(tweet, include_retweets, image_size, results):
     results['media'].append(urls)
 
 
-def get_medias(auth, user_id, include_retweets, image_size, since, since_id, until, until_id, likes):
+def get_medias(auth: Dict[str, str], user_id: str, include_retweets: bool, image_size: str, since: datetime, since_id: int, until: datetime, until_id: int, likes: bool) -> Dict[str, Any]:
     """Get all medias for a given Twitter user."""
     tweepy_auth = tweepy.OAuthHandler(auth['consumer_key'], auth['consumer_secret'])
     if 'access_token' in auth and 'access_token_secret' in auth:

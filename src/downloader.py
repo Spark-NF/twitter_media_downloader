@@ -6,11 +6,12 @@ Downloads all files to their already-generated paths.
 
 from __future__ import print_function
 import os
+from typing import Any, Dict
 import requests
 from tqdm import tqdm
 
 
-def download(data, output_dir, stream, show_already_exists):
+def download(data: Dict[str, Any], output_dir: str, stream: bool, show_already_exists: bool) -> None:
     """Download all files referenced in data"""
     # Count all entities in input file
     total = len(data['files']) + len(data['text'])

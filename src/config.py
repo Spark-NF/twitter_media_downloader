@@ -6,6 +6,7 @@ Helper methods to get the user's OAuth credentials.
 
 import json
 import os.path
+from typing import Dict
 
 try:
     # pylint: disable=redefined-builtin,invalid-name
@@ -14,12 +15,12 @@ except NameError:
     pass
 
 
-def read(msg):
+def read(msg: str) -> str:
     """Wrapper around the input module for easier mock-ing."""
     return input(msg)
 
 
-def get_oauth(path):
+def get_oauth(path: str) -> Dict[str, str]:
     """Loads the OAuth credentials from the file if it exists, otherwise asks the user for them."""
     if os.path.exists(path):
         return read_oauth(path)
@@ -39,7 +40,7 @@ def get_oauth(path):
     return auth
 
 
-def read_oauth(path):
+def read_oauth(path: str) -> Dict[str, str]:
     """Read the OAuth config file and fix any inconsistency within if necessary."""
     with open(path, encoding='utf-8') as oauth_file:
         data = oauth_file.read()
@@ -54,7 +55,7 @@ def read_oauth(path):
     return parsed
 
 
-def write_oauth(path, auth):
+def write_oauth(path: str, auth: Dict[str, str]) -> None:
     """Write the OAuth config file as pretty-printed JSON."""
     with open(path, 'w', encoding='utf-8') as oauth_file:
         json.dump(auth, oauth_file, indent=4, default=str)
