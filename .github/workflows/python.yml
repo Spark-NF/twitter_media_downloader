@@ -18,6 +18,9 @@ jobs:
         - python-version: 2.7
         - python-version: 3.5
           coverage: true
+        - python-version: 3.7
+        - python-version: 3.9
+        - python-version: 3.11
 
     steps:
       - name: Checkout
