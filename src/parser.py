@@ -100,10 +100,10 @@ def get_medias(auth: Dict[str, str], user_id: str, include_retweets: bool, image
         'retweets': 0,
         'media': []
     }
-    capi = api.favorites if likes else api.user_timeline
+    capi = api.get_favorites if likes else api.user_timeline
     kwargs = {"include_entities": True} if likes else {}
     pbar = tqdm(desc='Resolving', unit=' tweets')
-    for tweet in tweepy.Cursor(capi, id=user_id, include_rts=include_retweets, tweet_mode='extended', since_id=since_id, max_id=until_id, **kwargs).items():
+    for tweet in tweepy.Cursor(capi, user_id=user_id, include_rts=include_retweets, tweet_mode='extended', since_id=since_id, max_id=until_id, **kwargs).items():
         if since is not None and tweet.created_at < since:
             break
         if until is not None and tweet.created_at > until:
