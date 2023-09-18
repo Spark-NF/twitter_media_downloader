@@ -41,7 +41,8 @@ def get_oauth(path):
 
 def read_oauth(path):
     """Read the OAuth config file and fix any inconsistency within if necessary."""
-    data = open(path).read()
+    with open(path, encoding='utf-8') as oauth_file:
+        data = oauth_file.read()
     parsed = json.loads(data)
 
     # Rename "consumer_token" to "consumer_key"
@@ -55,5 +56,5 @@ def read_oauth(path):
 
 def write_oauth(path, auth):
     """Write the OAuth config file as pretty-printed JSON."""
-    with open(path, 'w') as oauth_file:
+    with open(path, 'w', encoding='utf-8') as oauth_file:
         json.dump(auth, oauth_file, indent=4, default=str)

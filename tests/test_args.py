@@ -42,7 +42,7 @@ def test_parse_file_arg_basic():
 def test_parse_file_arg_file():
     """Ensure that parse_file_arg works for reading text files."""
     test_file = 'test_args.txt'
-    with open(test_file, 'w') as file_descriptor:
+    with open(test_file, 'w', encoding='utf-8') as file_descriptor:
         file_descriptor.write('Twitter\nOther\nUser')
     parsed = parse_file_arg('@' + test_file)
     assert parsed == ['Twitter', 'Other', 'User']

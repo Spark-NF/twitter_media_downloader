@@ -61,7 +61,7 @@ def parse_tweet(tweet, include_retweets, image_size, results):
                     if image_size in media['sizes'] or image_size == 'orig':
                         url += ":" + image_size
                     else:
-                        print('Size `{0}` not found for image `{1}`'.format(image_size, media['media_url_https']))
+                        print(f'Size `{image_size}` not found for image `{media["media_url_https"]}`')
                     urls['images'].append(url)
 
     # Urls
@@ -113,13 +113,8 @@ def get_medias(auth, user_id, include_retweets, image_size, since, since_id, unt
 
     print(f'Link to user account: https://twitter.com/{user_id}')
     print(f'Medias for user {user_id}')
-
-    results_tweets = results['tweets']
-    results_retweets = results['retweets']
-    results_media = results['media']
-
-    print(f'- Tweets: {results_tweets}')
-    print(f'- Retweets: {results_retweets}')
-    print(f'- Parsed: {len(results_media)}')
+    print(f'- Tweets: {results["tweets"]}')
+    print(f'- Retweets: {results["retweets"]}')
+    print(f'- Parsed: {len(results["media"])}')
 
     return results

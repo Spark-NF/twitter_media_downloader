@@ -10,12 +10,12 @@ from ..src.mapper import slugify, parse_filename, generate_results
 
 def test_slugify_basic():
     """Ensure that the slugify method works for basic use cases."""
-    assert slugify(u'test') == 'test'
+    assert slugify('test') == 'test'
 
 
 def test_slugify_hard():
     """Ensure that diacritics and punctuation are properly slugified."""
-    assert slugify(u'héhé/test?') == 'hehe-test-'
+    assert slugify('héhé/test?') == 'hehe-test-'
 
 
 def test_parse_filename():
@@ -24,14 +24,14 @@ def test_parse_filename():
         'date': '2019-06-27 11:25:12',
         'original_date': '2019-06-27 11:25:12'
     }
-    assert parse_filename(u'[%date%] %filename%.%ext%', tokens, 'https://test.com/my_image.png:large') == '[2019-06-27 11-25-12] my_image.png'
+    assert parse_filename('[%date%] %filename%.%ext%', tokens, 'https://test.com/my_image.png:large') == '[2019-06-27 11-25-12] my_image.png'
 
     tokens = {
         'date': '2019-06-27 11:25:12',
         'original_date': '2019-06-23 11:25:12',
         'type': 'retweet'
     }
-    assert parse_filename(u'%type%/[%original_date%] %filename%.%ext%', tokens, 'https://test.com/oops') == 'retweet/[2019-06-23 11-25-12] oops.'
+    assert parse_filename('%type%/[%original_date%] %filename%.%ext%', tokens, 'https://test.com/oops') == 'retweet/[2019-06-23 11-25-12] oops.'
 
 
 def test_generate_results():
@@ -70,7 +70,7 @@ def test_generate_results():
             }
         ]
     }
-    assert generate_results(data, u'[%date%] %filename%.%ext%') == {
+    assert generate_results(data, '[%date%] %filename%.%ext%') == {
         'text': ['Hello world!'],
         'urls': {
             'periscope': ['https://periscope.tv/test'],

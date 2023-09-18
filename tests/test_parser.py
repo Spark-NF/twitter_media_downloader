@@ -7,7 +7,7 @@ Unit tests for the parser module.
 from ..src.parser import parse_tweet
 
 
-# pylint: disable=old-style-class,too-few-public-methods
+# pylint: disable=too-few-public-methods
 class Struct:
     """Basic class to convert a struct to a dict."""
     def __init__(self, **entries):

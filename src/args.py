@@ -15,9 +15,9 @@ def parse_date(date):
     except ValueError:
         try:
             return datetime.strptime(date, "%Y-%m-%d")
-        except ValueError:
-            msg = "Not a valid date: '{0}'.".format(date)
-            raise argparse.ArgumentTypeError(msg)
+        except ValueError as exc:
+            msg = f"Not a valid date: '{date}'."
+            raise argparse.ArgumentTypeError(msg) from exc
 
 
 def parse_args(args):
@@ -45,7 +45,7 @@ def parse_file_arg(arg):
     ret = []
     for val in arg:
         if val[0] == '@':
-            with open(val[1:]) as arg_file:
+            with open(val[1:], encoding='utf-8') as arg_file:
                 ret.extend(arg_file.readlines())
         else:
             ret.append(val)

@@ -12,10 +12,10 @@ from ..src.downloader import download
 
 def mocked_requests_get(*args, **kwargs): # pylint: disable=unused-argument
     """Mock all requests HTTP calls by returning the URL as contents."""
-    class MockResponse(object):
+    class MockResponse:
         """Mock response for the requests module."""
         def __init__(self, content, status_code):
-            self.headers = dict()
+            self.headers = {}
             self.content = str.encode(content)
             self.status_code = status_code
     return MockResponse(args[0], 200)
@@ -55,7 +55,7 @@ def test_download_already_exists():
     }
     if not os.path.exists('test_out'):
         os.makedirs('test_out')
-    with open('test_out/test.mp4', 'a') as test_file:
+    with open('test_out/test.mp4', 'a', encoding='utf-8') as test_file:
         test_file.write('test')
     with mock.patch('requests.get', side_effect=mocked_requests_get):
         download(data, 'test_out/', False, True)

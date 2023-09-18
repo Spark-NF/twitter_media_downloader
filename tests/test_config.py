@@ -35,7 +35,7 @@ def test_get_oauth_read():
         'access_token': 'my_token',
         'access_token_secret': 'my_token_secret'
     }
-    with open(TEST_FILE, 'w') as file_descriptor:
+    with open(TEST_FILE, 'w', encoding='utf-8') as file_descriptor:
         json.dump(auth, file_descriptor)
     assert get_oauth(TEST_FILE) == auth
 
@@ -50,6 +50,6 @@ def test_get_oauth_rename_consumer_token_to_consumer_key():
         'consumer_key': 'my_key',
         'consumer_secret': 'my_secret'
     }
-    with open(TEST_FILE, 'w') as file_descriptor:
+    with open(TEST_FILE, 'w', encoding='utf-8') as file_descriptor:
         json.dump(before, file_descriptor)
     assert get_oauth(TEST_FILE) == after

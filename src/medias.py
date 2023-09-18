@@ -5,7 +5,7 @@ Module to handle video medias.
 """
 
 
-class VideoMedia(object):
+class VideoMedia:
     """Basic class that allows to compare video medias by bitrate."""
 
     def bitrate(self):
