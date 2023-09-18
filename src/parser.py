@@ -4,7 +4,6 @@
 Loads and parses tweets using the Twitter API.
 """
 
-from __future__ import print_function
 from datetime import datetime
 from typing import Any, Dict
 import tweepy

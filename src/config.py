@@ -8,12 +8,6 @@ import json
 import os.path
 from typing import Dict
 
-try:
-    # pylint: disable=redefined-builtin,invalid-name
-    input = raw_input
-except NameError:
-    pass
-
 
 def read(msg: str) -> str:
     """Wrapper around the input module for easier mock-ing."""

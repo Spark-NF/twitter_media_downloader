@@ -7,27 +7,14 @@ Takes a list of parsed tweets and generate list of files to download and their t
 import re
 from datetime import datetime
 from os.path import splitext, basename
+from urllib.parse import urlparse
 from typing import Any, Dict, Union
-
-try:
-    from urllib.parse import urlparse
-except ImportError:
-    from urlparse import urlparse
-
-
-def is_unicode(value: str) -> bool:
-    """Checks if a string is an unicode string."""
-    try:
-        return isinstance(value, unicode)
-    except NameError:
-        return isinstance(value, str)
 
 
 def slugify(value: str) -> str:
     """Converts a string with special characters to a string without that can more easily be used as a filename."""
-    if is_unicode(value):
-        import unicodedata
-        value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
+    import unicodedata
+    value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
     value = re.sub('[<>/\\:"|?*]', '-', value).strip().lower()
     return value
 

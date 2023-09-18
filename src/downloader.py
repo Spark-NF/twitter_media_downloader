@@ -4,7 +4,6 @@
 Downloads all files to their already-generated paths.
 """
 
-from __future__ import print_function
 import os
 from typing import Any, Dict
 import requests
