@@ -1,4 +1,3 @@
-# !/opt/homebrew/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -94,7 +93,6 @@ def get_medias(auth, user_id, include_retweets, image_size, since, since_id, unt
         tweepy_auth.set_access_token(auth['access_token'], auth['access_token_secret'])
 
     api = tweepy.API(tweepy_auth, wait_on_rate_limit=True)
-    # wait_on_rate_limit_notify=True
 
     results = {
         'tweets': 0,
@@ -102,9 +100,9 @@ def get_medias(auth, user_id, include_retweets, image_size, since, since_id, unt
         'media': []
     }
     capi = api.favorites if likes else api.user_timeline
+    kwargs = {"include_entities": True} if likes else {}
     pbar = tqdm(desc='Resolving', unit=' tweets')
-    # include_entities=True
-    for tweet in tweepy.Cursor(capi, screen_name=user_id, include_rts=include_retweets, tweet_mode='extended', since_id=since_id, max_id=until_id).items():
+    for tweet in tweepy.Cursor(capi, id=user_id, include_rts=include_retweets, tweet_mode='extended', since_id=since_id, max_id=until_id, **kwargs).items():
         if since is not None and tweet.created_at < since:
             break
         if until is not None and tweet.created_at > until:
@@ -115,11 +113,11 @@ def get_medias(auth, user_id, include_retweets, image_size, since, since_id, unt
 
     print(f'Link to user account: https://twitter.com/{user_id}')
     print(f'Medias for user {user_id}')
-    
+
     results_tweets = results['tweets']
     results_retweets = results['retweets']
     results_media = results['media']
-    
+
     print(f'- Tweets: {results_tweets}')
     print(f'- Retweets: {results_retweets}')
     print(f'- Parsed: {len(results_media)}')
